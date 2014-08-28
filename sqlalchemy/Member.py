@@ -17,7 +17,7 @@ class Member(Base):
 class Episode(Base):
     __tablename__ = 'Episode'
     id = Column(Integer, primary_key=True)
-    Member_id = Column(Integer, ForeignKey('Member.member_id'))
+    member_id = Column(Integer, ForeignKey('Member.member_id'))
     cert = Column(String(250), nullable=False)
     Member = relationship(Member)
     member = relationship("Member",backref = backref('episodes',order_by =id))
@@ -26,7 +26,7 @@ class Identification(Base):
     __tablename__ = 'Identification'
     id = Column(Integer, primary_key=True)
     number = Column(String(250), nullable=False) 
-    Member_id = Column(Integer, ForeignKey('Member.member_id'))
+    member_id = Column(Integer, ForeignKey('Member.member_id'))
     member = relationship("Member",backref = backref('identifications',order_by =id))
 
 engine=create_engine('sqlite:///:memory:',echo=True)
@@ -54,3 +54,5 @@ print mbr
 mbr.name = 'xyz'
 print '----------------------'
 session.commit()
+for mbr in session.query(Member.name.label('Member_Name')).join(Episode,Member.member_id == Episode.member_id).filter(Episode.id ==1):
+    print mbr.Member_Name
