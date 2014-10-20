@@ -13,7 +13,7 @@ if __name__== '__main__':
     values = []
     cursor1.execute("select tab_name,col_name,data_type from config_tab c WITH(NOLOCK)  \
                     inner join config_col cc WITH(NOLOCK) on cc.config_tab_idn = c.config_tab_idn \
-                    where tab_name in ('code_acuity_rsn','code_Addr_type') and col_name not in ('source','crt_dt','upd_dt','user_idn','is_default','is_required') \
+                    where col_name not in ('source','crt_dt','upd_dt','user_idn','is_default','is_required') \
                     order by tab_name")
     rows = cursor1.fetchall()
     for row in rows:        
@@ -44,7 +44,7 @@ if __name__== '__main__':
             tmp.append([str(x) for x in r])
             data2.append(tmp)
         #------------------------------------
-        worksheet = workbook.add_worksheet(table+'_src')        
+        worksheet = workbook.add_worksheet(table)        
         j = 0 
         cnt = 1
         m = 0
