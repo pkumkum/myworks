@@ -21,7 +21,7 @@ if __name__== '__main__':
     tablelist = list(set([k[0] for k in tables]))
     tablelist.sort()
     tables = []
-    workbook = xlsxwriter.Workbook('code_table_data_diff.xlsx')
+    workbook = xlsxwriter.Workbook('code_table_data_diff.xlsx')    
     for table in tablelist:
         tables = []
         data1 = []
@@ -70,6 +70,7 @@ if __name__== '__main__':
                         k = k+1
                 cnt = cnt + 1        
         print table + ' data successfully exported'
+        #-----------------------------------        
     workbook.close()    
                     
         
