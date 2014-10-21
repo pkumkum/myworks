@@ -15,7 +15,8 @@ if __name__== '__main__':
         cursor1.execute("select tab_name,col_name,data_type from config_tab c WITH(NOLOCK)  \
                         inner join config_col cc WITH(NOLOCK) on cc.config_tab_idn = c.config_tab_idn \
                         where col_name not in ('source','crt_dt','upd_dt','user_idn','is_default','is_required') \
-                        and tab_name not in ('code_diag','code_proc','user_type','config_note_type') and c.entity_active = 'Y' \
+                        and tab_name not in ('code_cpt_modifier','code_diag','code_proc','user_type','config_note_type')\
+                        and c.entity_active = 'Y' \
                         and cc.entity_active ='Y' order by tab_name")
         rows = cursor1.fetchall()
         for row in rows:        
