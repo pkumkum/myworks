@@ -39,43 +39,30 @@ if __name__== '__main__':
                 cursor1.execute(s)
                 rowset1 = cursor1.fetchall()             
                 cursor2.execute(s)
-                rowset2 = cursor2.fetchall()         
+                rowset2 = cursor2.fetchall()   
                 for row in rowset1:
                     tmp = []
                     tmp.append([str(x) for x in row])
                     data1.append(tmp)           
-                for r in rowset2:
+                for row in rowset2:
                     tmp = []
-                    tmp.append([str(x) for x in r])
+                    tmp.append([str(x) for x in row])
                     data2.append(tmp)
                 #------------------------------------
-                worksheet = workbook.add_worksheet(table)        
-                j = 0 
-                cnt = 1
-                m = 0
-                map((lambda x: worksheet.write(0, columns.index(x), x)),columns)        
-                for x in data1:
-                    k = 0           
-                    if x not in data2:
-                        for item in x:                                          
-                            for p in item:
-                                worksheet.write(cnt, k, p.encode('utf-8','ignore'),)
-                                k = k+1  
-                                m = k
-                        cnt =cnt + 1     
-                #---------------------target-----       
-                map((lambda x: worksheet.write(0, columns.index(x)+m + 1, x)),columns)
-                cnt = 1       
-                for x in data2:               
-                    if x not in data1:
-                        for item in x:  
-                            k = m + 1                    
-                            for p in item:    
-                                worksheet.write(cnt, k, p.encode('utf-8','ignore'))
-                                k = k+1
-                        cnt = cnt + 1        
-                print table + ' data successfully exported'
-                #-----------------------------------      
+                tmplist1 = [y[0] for y in[x for x in data1 if x not in data2]]
+                tmplist2=  [y[0] for y in[x for x in data2 if x not in data1]]
+                if len(tmplist1)>0 or len(tmplist2)>0:                
+                    worksheet = workbook.add_worksheet(table)        
+                    map((lambda x: worksheet.write(0, columns.index(x), x)),columns)    
+                    for item in tmplist1:                                          
+                        for p in item:
+                            worksheet.write(tmplist1.index(item)+1, item.index(p), p.encode('utf-8','ignore'),)                        
+                    #---------------------target-----       
+                    map((lambda x: worksheet.write(0, columns.index(x)+ len(tmplist1[0])+ 1, x)),columns)
+                    for item in tmplist2:               
+                        for p in item:    
+                            worksheet.write(tmplist2.index(item)+1, len(tmplist1[0])+item.index(p)+1, p.encode('utf-8','ignore'))   
+                    print table + ' data successfully exported' 
             except Exception ,e:
                 print str(e) 
                 pass
