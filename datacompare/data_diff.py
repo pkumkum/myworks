@@ -14,7 +14,7 @@ if __name__== '__main__':
     cursor1.execute("select tab_name,col_name,data_type from config_tab c WITH(NOLOCK)  \
                     inner join config_col cc WITH(NOLOCK) on cc.config_tab_idn = c.config_tab_idn \
                     where col_name not in ('source','crt_dt','upd_dt','user_idn','is_default','is_required') \
-                    order by tab_name")
+                    and tab_name not in ('code_diag',code_proc') order by tab_name")
     rows = cursor1.fetchall()
     for row in rows:        
         tables.append([x.split(',')[0] for x in row])    
