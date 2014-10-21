@@ -24,56 +24,60 @@ if __name__== '__main__':
         tables = []
         workbook = xlsxwriter.Workbook('code_table_data_diff.xlsx')    
         for table in tablelist:
-            tables = []
-            data1 = []
-            data2 = []
-            dl1 = []
-            for row in rows:        
-                tables.append([x.split(',')[0] for x in row])  
-            columns = [k[1] for k in tables if k[0] == table] 
-            s = returnquery(table,columns)     
-            cursor1.execute(s)
-            rowset1 = cursor1.fetchall()             
-            cursor2.execute(s)
-            rowset2 = cursor2.fetchall()         
-            for row in rowset1:
-                tmp = []
-                tmp.append([str(x) for x in row])
-                data1.append(tmp)           
-            for r in rowset2:
-                tmp = []
-                tmp.append([str(x) for x in r])
-                data2.append(tmp)
-            #------------------------------------
-            worksheet = workbook.add_worksheet(table)        
-            j = 0 
-            cnt = 1
-            m = 0
-            map((lambda x: worksheet.write(0, columns.index(x), x)),columns)        
-            for x in data1:
-                k = 0           
-                if x not in data2:
-                    for item in x:                                          
-                        for p in item:
-                            worksheet.write(cnt, k, p,)
-                            k = k+1  
-                            m = k
-                    cnt =cnt + 1     
-            #---------------------target-----       
-            map((lambda x: worksheet.write(0, columns.index(x)+m + 1, x)),columns)
-            cnt = 1       
-            for x in data2:               
-                if x not in data1:
-                    for item in x:  
-                        k = m + 1                    
-                        for p in item:    
-                            worksheet.write(cnt, k, p)
-                            k = k+1
-                    cnt = cnt + 1        
-            print table + ' data successfully exported'
-            #-----------------------------------        
+            try:
+                tables = []
+                data1 = []
+                data2 = []
+                dl1 = []
+                for row in rows:        
+                    tables.append([x.split(',')[0] for x in row])  
+                columns = [k[1] for k in tables if k[0] == table] 
+                s = returnquery(table,columns)     
+                cursor1.execute(s)
+                rowset1 = cursor1.fetchall()             
+                cursor2.execute(s)
+                rowset2 = cursor2.fetchall()         
+                for row in rowset1:
+                    tmp = []
+                    tmp.append([str(x) for x in row])
+                    data1.append(tmp)           
+                for r in rowset2:
+                    tmp = []
+                    tmp.append([str(x) for x in r])
+                    data2.append(tmp)
+                #------------------------------------
+                worksheet = workbook.add_worksheet(table)        
+                j = 0 
+                cnt = 1
+                m = 0
+                map((lambda x: worksheet.write(0, columns.index(x), x)),columns)        
+                for x in data1:
+                    k = 0           
+                    if x not in data2:
+                        for item in x:                                          
+                            for p in item:
+                                worksheet.write(cnt, k, p,)
+                                k = k+1  
+                                m = k
+                        cnt =cnt + 1     
+                #---------------------target-----       
+                map((lambda x: worksheet.write(0, columns.index(x)+m + 1, x)),columns)
+                cnt = 1       
+                for x in data2:               
+                    if x not in data1:
+                        for item in x:  
+                            k = m + 1                    
+                            for p in item:    
+                                worksheet.write(cnt, k, p)
+                                k = k+1
+                        cnt = cnt + 1        
+                print table + ' data successfully exported'
+                #-----------------------------------      
+            except Exception ,e:
+                print str(e) 
+                pass
         workbook.close()    
     except:
-        print "Unexpected error:", sys.exc_info()[0]
-        pass                
+        print "error "+str(IOError)
+                        
         
