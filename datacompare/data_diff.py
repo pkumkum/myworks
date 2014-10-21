@@ -11,7 +11,6 @@ if __name__== '__main__':
         cursor1 = cnxn1.cursor()
         cursor2 = cnxn2.cursor()
         tables = []
-        values = []
         cursor1.execute("select tab_name,col_name,data_type from config_tab c WITH(NOLOCK)  \
                         inner join config_col cc WITH(NOLOCK) on cc.config_tab_idn = c.config_tab_idn \
                         where col_name not in ('source','crt_dt','upd_dt','user_idn','is_default','is_required') \
@@ -31,7 +30,6 @@ if __name__== '__main__':
                 tables = []
                 data1 = []
                 data2 = []
-                dl1 = []
                 for row in rows:        
                     tables.append([x.split(',')[0] for x in row])  
                 columns = [k[1] for k in tables if k[0] == table] 
