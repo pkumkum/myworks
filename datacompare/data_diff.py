@@ -10,11 +10,13 @@ if __name__== '__main__':
         cnxn2 = pyodbc.connect('DSN=sqlpy2;UID=kramya;PWD=krishna')
         cursor1 = cnxn1.cursor()
         cursor2 = cnxn2.cursor()
+        tables = []
+        values = []
         cursor1.execute("select tab_name,col_name,data_type from config_tab c WITH(NOLOCK)  \
                         inner join config_col cc WITH(NOLOCK) on cc.config_tab_idn = c.config_tab_idn \
                         where col_name not in ('source','crt_dt','upd_dt','user_idn','is_default','is_required') \
-                        and tab_name not in ('code_diag','code_proc') and cc.entity_active ='N'  \
-						and c.entity_active ='N' order by tab_name")
+                        and tab_name not in ('code_diag','code_proc','user_type','config_note_type') and c.entity_active = 'Y' \
+                        and cc.entity_active ='Y' order by tab_name")
         rows = cursor1.fetchall()
         for row in rows:        
             tables.append([x.split(',')[0] for x in row])    
@@ -24,6 +26,7 @@ if __name__== '__main__':
         workbook = xlsxwriter.Workbook('code_table_data_diff.xlsx')    
         for table in tablelist:
             try:
+                print 'processing table : '+table+'..'
                 tables = []
                 data1 = []
                 data2 = []
@@ -55,7 +58,7 @@ if __name__== '__main__':
                     if x not in data2:
                         for item in x:                                          
                             for p in item:
-                                worksheet.write(cnt, k, p,)
+                                worksheet.write(cnt, k, p.encode('utf-8','ignore'),)
                                 k = k+1  
                                 m = k
                         cnt =cnt + 1     
@@ -67,7 +70,7 @@ if __name__== '__main__':
                         for item in x:  
                             k = m + 1                    
                             for p in item:    
-                                worksheet.write(cnt, k, p)
+                                worksheet.write(cnt, k, p.encode('utf-8','ignore'))
                                 k = k+1
                         cnt = cnt + 1        
                 print table + ' data successfully exported'
