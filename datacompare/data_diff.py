@@ -10,12 +10,11 @@ if __name__== '__main__':
         cnxn2 = pyodbc.connect('DSN=sqlpy2;UID=kramya;PWD=krishna')
         cursor1 = cnxn1.cursor()
         cursor2 = cnxn2.cursor()
-        tables = []
-        values = []
         cursor1.execute("select tab_name,col_name,data_type from config_tab c WITH(NOLOCK)  \
                         inner join config_col cc WITH(NOLOCK) on cc.config_tab_idn = c.config_tab_idn \
                         where col_name not in ('source','crt_dt','upd_dt','user_idn','is_default','is_required') \
-                        and tab_name not in ('code_diag','code_proc') order by tab_name")
+                        and tab_name not in ('code_diag','code_proc') and cc.entity_active ='N'  \
+						and c.entity_active ='N' order by tab_name")
         rows = cursor1.fetchall()
         for row in rows:        
             tables.append([x.split(',')[0] for x in row])    
@@ -77,7 +76,7 @@ if __name__== '__main__':
                 print str(e) 
                 pass
         workbook.close()    
-    except:
-        print "error "+str(IOError)
+    except Exception ,e:
+        print str(e) 
                         
         
