@@ -7,7 +7,7 @@ def returnquery(table,columns):
 if __name__== '__main__':
     try:
         cnxn1 = pyodbc.connect('DSN=sqlpy1;UID=***;PWD=xxxx')
-        cnxn2 = pyodbc.connect('DSN=sqlpy2;***=kramya;PWD=xxxx')
+        cnxn2 = pyodbc.connect('DSN=sqlpy2;UID=***;PWD=xxxx')
         cursor1 = cnxn1.cursor()
         cursor2 = cnxn2.cursor()
         tables = []
