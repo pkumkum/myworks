@@ -6,8 +6,8 @@ def returnquery(table,columns):
     return 'select ' + ",".join([str(x) for x in columns]) +' from ' + table + ' with(nolock)'
 if __name__== '__main__':
     try:
-        cnxn1 = pyodbc.connect('DSN=sqlpy1;UID=kramya;PWD=krishna')
-        cnxn2 = pyodbc.connect('DSN=sqlpy2;UID=kramya;PWD=krishna')
+        cnxn1 = pyodbc.connect('DSN=sqlpy1;UID=***;PWD=xxxx')
+        cnxn2 = pyodbc.connect('DSN=sqlpy2;***=kramya;PWD=xxxx')
         cursor1 = cnxn1.cursor()
         cursor2 = cnxn2.cursor()
         tables = []
