@@ -88,5 +88,5 @@ if __name__ == "__main__":
     output = counts.collect()
     ##filter for members with count >2
     a = filter(lambda x: x if x[0] != None and x[1] > 2 else None,output)
-    for (word, count) in a:
-        print "%s: %i" % (word, count)
+    for (mbr, count) in a:
+        print "%s: %i" % (mbr, count)
