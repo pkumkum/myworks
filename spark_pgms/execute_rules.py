@@ -14,7 +14,7 @@ def get_claimcount_per_mbr_per_pkg(pkg):
     return clmcnt.get(pkg)
 def evaluate(values):
     '''expects date to be in yyyy-mm-dd format always without time,empty dates condition not handled'''
-    ''''''
+    '''currently onle string, date and int type can be handled'''
     if values == None:
         return False
     else:        
