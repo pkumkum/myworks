@@ -5,11 +5,16 @@ from datetime import datetime, timedelta
 import datetime
 
 def getrulesfrompackage(pkg):
-    packages = {'asthma':[[11,['23'],'=','string','|'],[27,['2001-01-19'],'>=','datetime','|']]}
-    return packages.get(pkg)
-
-def evaluate(values):
     '''values example :-[index of col in data passed,[list of values to be checked],operator to be used,data type,separator in csv,csv line data]'''
+    packages = {'asthma':[[13,['23'],'=','string','|'],[29,['2014-05-01'],'>=','datetime','|']],'diabetes':[[]]}
+    return packages.get(pkg)
+def get_claimcount_per_mbr_per_pkg(pkg):
+    '''this is used to check the max claim count per mbr'''
+    clmcnt = {'asthma':1,'diabetes':2}
+    return clmcnt.get(pkg)
+def evaluate(values):
+    '''expects date to be in yyyy-mm-dd format always without time,empty dates condition not handled'''
+    ''''''
     if values == None:
         return False
     else:        
@@ -87,6 +92,7 @@ if __name__ == "__main__":
             .reduceByKey(add) 
     output = counts.collect()
     ##filter for members with count >2
-    a = filter(lambda x: x if x[0] != None and x[1] > 2 else None,output)
-    for (mbr, count) in a:
-        print "%s: %i" % (mbr, count)
+    a = filter(lambda x: x if x[0] != None and x[1] >= get_claimcount_per_mbr_per_pkg('asthma')  else None,output)
+    for (mbr,clmcount) in a:
+        print "%s: %i" % (mbr, clmcount)
+
