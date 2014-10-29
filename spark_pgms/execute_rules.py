@@ -8,15 +8,8 @@ def getseparator():
     return '|'
 def getrulesfrompackage(pkg):
     '''values example :-[index of col in data passed,[list of values to be checked],operator to be used,data type]'''
-    packages = {'asthma':[ \
-                          [13,['23'],'=','string'], \ '''check for place of svc code'''
-                          [29,['2014-05-01'],'>=','datetime'], \ '''check for date of svc begin'''
-                          [75,['4423'],'in','string'], \ '''check for diag code'''
-                          [73,['1'],'=','string'], \ '''check for diag position'''
-                          [47,['A9579'],'in','string'] \ '''check for proc code'''
-                         ], \
-                'diabetes':[[]] \
-               }
+    '''below example checks for place of svc cd,date of svc begin,diag code,diag position,proc cd'''
+    packages = {'asthma':[[13,['23'],'=','string'],[29,['2014-05-01'],'>=','datetime'],[75,['4423'],'in','string'],[73,['1'],'=','string'],[47,['A9579'],'in','string']], 'diabetes':[[]] }
     return packages.get(pkg)
 def get_claimcount_per_mbr_per_pkg(pkg):
     '''this is used to check the max claim count per mbr'''
