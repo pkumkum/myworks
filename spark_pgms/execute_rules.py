@@ -4,9 +4,19 @@ from pyspark import SparkContext
 from datetime import datetime, timedelta
 import datetime
 
+def getseparator():
+    return '|'
 def getrulesfrompackage(pkg):
-    '''values example :-[index of col in data passed,[list of values to be checked],operator to be used,data type,separator in csv,csv line data]'''
-    packages = {'asthma':[[13,['23'],'=','string','|'],[29,['2014-05-01'],'>=','datetime','|']],'diabetes':[[]]}
+    '''values example :-[index of col in data passed,[list of values to be checked],operator to be used,data type]'''
+    packages = {'asthma':[ \
+                          [13,['23'],'=','string'], \ '''check for place of svc code'''
+                          [29,['2014-05-01'],'>=','datetime'], \ '''check for date of svc begin'''
+                          [75,['4423'],'in','string'], \ '''check for diag code'''
+                          [73,['1'],'=','string'], \ '''check for diag position'''
+                          [47,['A9579'],'in','string'] \ '''check for proc code'''
+                         ], \
+                'diabetes':[[]] \
+               }
     return packages.get(pkg)
 def get_claimcount_per_mbr_per_pkg(pkg):
     '''this is used to check the max claim count per mbr'''
@@ -14,15 +24,15 @@ def get_claimcount_per_mbr_per_pkg(pkg):
     return clmcnt.get(pkg)
 def evaluate(values):
     '''expects date to be in yyyy-mm-dd format always without time,empty dates condition not handled'''
-    '''currently onle string, date and int type can be handled'''
+    ''''''
     if values == None:
         return False
     else:        
         flag = False
         lstvalue = values[1]
         strvalcol = values[0]
-        separator = values [4]
-        data = values[5]
+        separator = getseparator()
+        data = values[4]
         if values[3] == 'datetime':
             strkey =  datetime.datetime.strptime(data.split(separator)[strvalcol], '%Y-%m-%d').date()
             strstdtval = datetime.datetime.strptime(lstvalue[0], '%Y-%m-%d').date()            
