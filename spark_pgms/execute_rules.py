@@ -9,7 +9,7 @@ def getseparator():
 def getrulesfrompackage(pkg):
     '''values example :-[index of col in data passed,[list of values to be checked],operator to be used,data type]'''
     '''below example checks for place of svc cd,date of svc begin,diag code,diag position,proc cd'''
-    packages = {'asthma':[[13,['23'],'=','string'],[29,['2014-05-01'],'>=','datetime'],[75,['4423'],'in','string'],[73,['1'],'=','string'],[47,['A9579'],'in','string']], 'diabetes':[[]] }
+    packages = {'asthma':[[12,['23'],'=','string'],[29,['2014-05-01'],'>=','datetime'],[75,['4423'],'in','string'],[73,['1'],'=','string'],[47,['A9579'],'in','string']], 'diabetes':[[]] }
     return packages.get(pkg)
 def get_claimcount_per_mbr_per_pkg(pkg):
     '''this is used to check the max claim count per mbr'''
@@ -17,6 +17,7 @@ def get_claimcount_per_mbr_per_pkg(pkg):
     return clmcnt.get(pkg)
 def evaluate(values):
     '''expects date to be in yyyy-mm-dd format always without time,empty dates condition not handled'''
+    '''currently only string,int and date types covered.this function can be modified to accommodate other data types'''
     if values == None:
         return False
     else:        
@@ -97,4 +98,5 @@ if __name__ == "__main__":
     a = filter(lambda x: x if x[0] != None and x[1] >= get_claimcount_per_mbr_per_pkg('asthma')  else None,output)
     for (mbr,clmcount) in a:
         print "%s: %i" % (mbr, clmcount)
+
 
