@@ -60,7 +60,7 @@ if __name__== '__main__':
                     for item in tmplist2:               
                         for p in item:    
                             worksheet.write(tmplist2.index(item)+1, len(tmplist1[0])+item.index(p)+1, p.encode('utf-8','ignore'))   
-                    print table + ' data successfully exported' 
+                    print '['+str(tablelist.index(table))+ '] '+table+' data successfully exported'                       
             except Exception ,e:
                 print str(e) 
                 pass
