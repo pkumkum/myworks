@@ -6,8 +6,8 @@ def returnquery(table,columns):
     return 'select ' + ",".join([str(x) for x in columns]) +' from ' + table + ' with(nolock)'
 if __name__== '__main__':
     try:
-        cnxn1 = pyodbc.connect('DSN=sqlpy1;UID=***;PWD=xxxx')
-        cnxn2 = pyodbc.connect('DSN=sqlpy2;UID=***;PWD=xxxx')
+        cnxn1 = pyodbc.connect('DSN=sqlpy1;UID=jiva_user;PWD=jiva_user')
+        cnxn2 = pyodbc.connect('DSN=sqlpy2;UID=kramya;PWD=krishna')
         cursor1 = cnxn1.cursor()
         cursor2 = cnxn2.cursor()
         tables = []
@@ -15,7 +15,7 @@ if __name__== '__main__':
                         inner join config_col cc WITH(NOLOCK) on cc.config_tab_idn = c.config_tab_idn \
                         where col_name not in ('source','crt_dt','upd_dt','user_idn','is_default','is_required') \
                         and tab_name not in ('code_cpt_modifier','code_diag','code_proc','user_type','config_note_type')\
-                        and c.entity_active = 'Y' \
+                        and c.entity_active = 'Y' and tab_name in ('code_enc_type') \
                         and cc.entity_active ='Y' order by tab_name")
         rows = cursor1.fetchall()
         for row in rows:        
