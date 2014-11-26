@@ -54,8 +54,7 @@ if __name__== '__main__':
                     map((lambda x: worksheet.write(0, columns.index(x), x)),columns)    
                     for item in tmplist1:                                          
                         for p in item:
-                            worksheet.write(tmplist1.index(item)+1, item.index(p), p.encode('utf-8','ignore'),)                        
-                    #---------------------target-----       
+                            worksheet.write(tmplist1.index(item)+1, item.index(p), p.encode('utf-8','ignore'),)                          
                     map((lambda x: worksheet.write(0, columns.index(x)+ len(tmplist1[0])+ 1, x)),columns)
                     for item in tmplist2:               
                         for p in item:    
