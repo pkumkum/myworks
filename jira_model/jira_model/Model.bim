@@ -4349,6 +4349,7 @@
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
             </Attribute>
             <Attribute>
               <Annotations>
@@ -6595,6 +6596,7 @@
                 </Attribute>
                 <Attribute>
                   <AttributeID>EFFORT</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
                 </Attribute>
                 <Attribute>
                   <AttributeID>EMPLOYEE_MASTERID</AttributeID>
