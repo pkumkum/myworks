@@ -446,6 +446,11 @@
                   <OverrideBehavior>None</OverrideBehavior>
                   <Name>EMP_NAME</Name>
                 </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>ACTIVE2</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>IS_ACTIVE</Name>
+                </AttributeRelationship>
               </AttributeRelationships>
               <OrderBy>Key</OrderBy>
               <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
@@ -803,6 +808,7 @@
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
             </Attribute>
             <Attribute>
               <Annotations>
@@ -1146,6 +1152,33 @@
                 <DataType>WChar</DataType>
                 <Source xsi:type="ddl200_200:ExpressionBinding">
                   <Expression>EMPLOYEE[FIRSTNAME] &amp;" " &amp;EMPLOYEE[LASTNAME]</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="Text" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>ACTIVE2</ID>
+              <Name>IS_ACTIVE</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>IF(EMPLOYEE[ACTIVE]=1,"YES","NO")</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>IF(EMPLOYEE[ACTIVE]=1,"YES","NO")</Expression>
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
@@ -5788,23 +5821,181 @@
         </Dimension>
         <Dimension>
           <ID>DateDimension_af944f43-81a8-45a0-9fba-7fef635b2f1a</ID>
-          <Name>DATE</Name>
+          <Name>TIMESHEET_DATE</Name>
           <Annotations>
             <Annotation>
-              <Name>IsQueryEditorUsed</Name>
-              <Value>False</Value>
+              <Name>TableWidgetSerialization</Name>
+              <Value>&lt;?xml version="1.0" encoding="UTF-16"?&gt;&lt;Gemini xmlns="TableWidgetSerialization"&gt;&lt;AnnotationContent&gt;&lt;![CDATA[&lt;?xml version="1.0"?&gt;
+&lt;TableWidgetGridSerialization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ColumnSuggestedType /&gt;
+  &lt;ColumnFormat /&gt;
+  &lt;ColumnAccuracy /&gt;
+  &lt;ColumnCurrencySymbol /&gt;
+  &lt;ColumnPositivePattern /&gt;
+  &lt;ColumnNegativePattern /&gt;
+  &lt;ColumnWidths&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;id&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;38&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Day&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;49&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Month&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;60&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Year&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;52&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;quarter&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;66&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;date&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;52&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;day_of_week&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;95&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;wrk_hrs&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;68&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/ColumnWidths&gt;
+  &lt;ColumnDisplayIndex&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;id&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;0&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Day&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;1&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Month&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;2&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Year&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;3&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;quarter&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;4&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;date&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;5&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;day_of_week&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;6&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;wrk_hrs&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;7&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/ColumnDisplayIndex&gt;
+  &lt;ColumnFrozen /&gt;
+  &lt;ColumnChecked&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;day_of_week&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;boolean&gt;false&lt;/boolean&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;wrk_hrs&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;boolean&gt;false&lt;/boolean&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/ColumnChecked&gt;
+  &lt;ColumnFilter /&gt;
+  &lt;SelectionFilter /&gt;
+  &lt;FilterParameters /&gt;
+  &lt;IsSortDescending&gt;false&lt;/IsSortDescending&gt;
+&lt;/TableWidgetGridSerialization&gt;]]&gt;&lt;/AnnotationContent&gt;&lt;/Gemini&gt;</Value>
             </Annotation>
             <Annotation>
               <Name>QueryEditorSerialization</Name>
             </Annotation>
             <Annotation>
-              <Name>TableWidgetSerialization</Name>
-            </Annotation>
-            <Annotation>
-              <Name>DataMarketWebBaseUrl</Name>
-            </Annotation>
-            <Annotation>
-              <Name>DataMarketWebQueryUrl</Name>
+              <Name>IsQueryEditorUsed</Name>
+              <Value>False</Value>
             </Annotation>
           </Annotations>
           <Source xsi:type="DataSourceViewBinding">
@@ -6117,14 +6308,14 @@
                 <KeyColumn>
                   <DataType>Empty</DataType>
                   <Source xsi:type="ddl200_200:ExpressionBinding">
-                    <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],'DATE'[MONTH])</Expression>
+                    <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],TIMESHEET_DATE[MONTH])</Expression>
                   </Source>
                 </KeyColumn>
               </KeyColumns>
               <NameColumn>
                 <DataType>WChar</DataType>
                 <Source xsi:type="ddl200_200:ExpressionBinding">
-                  <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],'DATE'[MONTH])</Expression>
+                  <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],TIMESHEET_DATE[MONTH])</Expression>
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
@@ -6144,14 +6335,14 @@
                 <KeyColumn>
                   <DataType>Empty</DataType>
                   <Source xsi:type="ddl200_200:ExpressionBinding">
-                    <Expression>WEEKDAY('DATE'[DATE])</Expression>
+                    <Expression>WEEKDAY(TIMESHEET_DATE[DATE])</Expression>
                   </Source>
                 </KeyColumn>
               </KeyColumns>
               <NameColumn>
                 <DataType>WChar</DataType>
                 <Source xsi:type="ddl200_200:ExpressionBinding">
-                  <Expression>WEEKDAY('DATE'[DATE])</Expression>
+                  <Expression>WEEKDAY(TIMESHEET_DATE[DATE])</Expression>
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
@@ -6193,6 +6384,260 @@
             <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
             <Source xsi:type="ProactiveCachingInheritedBinding" />
           </ProactiveCaching>
+        </Dimension>
+        <Dimension>
+          <ID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</ID>
+          <Name>DEPT_EMP_COUNT_DATE</Name>
+          <Annotations>
+            <Annotation>
+              <Name>IsQueryEditorUsed</Name>
+              <Value>False</Value>
+            </Annotation>
+            <Annotation>
+              <Name>QueryEditorSerialization</Name>
+            </Annotation>
+            <Annotation>
+              <Name>TableWidgetSerialization</Name>
+            </Annotation>
+            <Annotation>
+              <Name>DataMarketWebBaseUrl</Name>
+            </Annotation>
+            <Annotation>
+              <Name>DataMarketWebQueryUrl</Name>
+            </Annotation>
+          </Annotations>
+          <Source xsi:type="DataSourceViewBinding">
+            <DataSourceViewID>Sandbox</DataSourceViewID>
+          </Source>
+          <UnknownMember valuens="ddl200_200">AutomaticNull</UnknownMember>
+          <ErrorConfiguration>
+            <KeyNotFound>IgnoreError</KeyNotFound>
+            <KeyDuplicate>ReportAndStop</KeyDuplicate>
+            <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+          </ErrorConfiguration>
+          <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+          <Language>1033</Language>
+          <UnknownMemberName>Unknown</UnknownMemberName>
+          <Attributes>
+            <Attribute>
+              <ID>RowNumber</ID>
+              <Name>RowNumber</Name>
+              <Type valuens="ddl200_200">RowNumber</Type>
+              <Usage>Key</Usage>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>4</DataSize>
+                  <NullProcessing>Error</NullProcessing>
+                  <Source xsi:type="ddl200_200:RowNumberBinding" />
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>4</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <Source xsi:type="ddl200_200:RowNumberBinding" />
+              </NameColumn>
+              <AttributeRelationships>
+                <AttributeRelationship>
+                  <AttributeID>emp_total</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>emp_total</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>month</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>month</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>year</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>year</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>department_masterid</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>department_masterid</Name>
+                </AttributeRelationship>
+              </AttributeRelationships>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>emp_total</ID>
+              <Name>emp_total</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>BigInt</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                    <ColumnID>emp_total</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                  <ColumnID>emp_total</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>month</ID>
+              <Name>month</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>BigInt</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                    <ColumnID>month</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                  <ColumnID>month</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>year</ID>
+              <Name>year</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>BigInt</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                    <ColumnID>year</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                  <ColumnID>year</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>department_masterid</ID>
+              <Name>department_masterid</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>BigInt</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                    <ColumnID>department_masterid</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                  <ColumnID>department_masterid</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+          </Attributes>
+          <ProactiveCaching>
+            <SilenceInterval>-PT1S</SilenceInterval>
+            <Latency>-PT1S</Latency>
+            <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+            <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+            <Source xsi:type="ProactiveCachingInheritedBinding" />
+          </ProactiveCaching>
+          <ddl300_300:Relationships>
+            <ddl300_300:Relationship>
+              <ID>47135880-2c19-4234-afb7-8b1739b9feb0</ID>
+              <ddl300_300:FromRelationshipEnd>
+                <ddl300_300:Multiplicity>Many</ddl300_300:Multiplicity>
+                <ddl300:VisualizationProperties />
+                <DimensionID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</DimensionID>
+                <Attributes>
+                  <Attribute>
+                    <AttributeID>department_masterid</AttributeID>
+                  </Attribute>
+                </Attributes>
+              </ddl300_300:FromRelationshipEnd>
+              <ddl300_300:ToRelationshipEnd>
+                <ddl300_300:Multiplicity>One</ddl300_300:Multiplicity>
+                <ddl300:VisualizationProperties />
+                <DimensionID>V_DEPARTMENT_MASTER_5e96d101-e192-42de-95c8-4766bf80a933</DimensionID>
+                <Attributes>
+                  <Attribute>
+                    <AttributeID>DEPARTMENT_MASTERID</AttributeID>
+                  </Attribute>
+                </Attributes>
+              </ddl300_300:ToRelationshipEnd>
+            </ddl300_300:Relationship>
+          </ddl300_300:Relationships>
         </Dimension>
       </Dimensions>
       <Cubes>
@@ -6278,6 +6723,7 @@
                 </Attribute>
                 <Attribute>
                   <AttributeID>ACTIVE</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
                 </Attribute>
                 <Attribute>
                   <AttributeID>DISPLAY_NAME</AttributeID>
@@ -6308,6 +6754,9 @@
                 </Attribute>
                 <Attribute>
                   <AttributeID>EMP_NAME</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>ACTIVE2</AttributeID>
                 </Attribute>
               </Attributes>
             </Dimension>
@@ -6751,7 +7200,7 @@
             </Dimension>
             <Dimension>
               <ID>DateDimension_af944f43-81a8-45a0-9fba-7fef635b2f1a</ID>
-              <Name>DATE</Name>
+              <Name>TIMESHEET_DATE</Name>
               <DimensionID>DateDimension_af944f43-81a8-45a0-9fba-7fef635b2f1a</DimensionID>
               <Attributes>
                 <Attribute>
@@ -6786,6 +7235,31 @@
                 </Attribute>
                 <Attribute>
                   <AttributeID>ACTUAL_HOURS</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+              </Attributes>
+            </Dimension>
+            <Dimension>
+              <ID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</ID>
+              <Name>DEPT_EMP_COUNT_DATE</Name>
+              <DimensionID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</DimensionID>
+              <Attributes>
+                <Attribute>
+                  <AttributeID>RowNumber</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>emp_total</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>month</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>year</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>department_masterid</AttributeID>
                   <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
                 </Attribute>
               </Attributes>
@@ -7293,6 +7767,17 @@
                           <DataType>Empty</DataType>
                           <Source xsi:type="ddl200_200:ExpressionBinding">
                             <Expression>EMPLOYEE[FIRSTNAME] &amp;" " &amp;EMPLOYEE[LASTNAME]</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>ACTIVE2</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>IF(EMPLOYEE[ACTIVE]=1,"YES","NO")</Expression>
                           </Source>
                         </KeyColumn>
                       </KeyColumns>
@@ -9932,6 +10417,17 @@
                         </KeyColumn>
                       </KeyColumns>
                     </Attribute>
+                    <Attribute>
+                      <AttributeID>ACTIVE2</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>IF(EMPLOYEE[ACTIVE]=1,"YES","NO")</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
                   </Attributes>
                   <IntermediateCubeDimensionID>V_TIMESHEET_83ee8a9f-7f13-41a9-9a4f-75dbc00b7e3b</IntermediateCubeDimensionID>
                   <IntermediateGranularityAttributeID>EMPLOYEE_MASTERID</IntermediateGranularityAttributeID>
@@ -12142,11 +12638,11 @@
             </MeasureGroup>
             <MeasureGroup>
               <ID>DateDimension_af944f43-81a8-45a0-9fba-7fef635b2f1a</ID>
-              <Name>DATE</Name>
+              <Name>TIMESHEET_DATE</Name>
               <Measures>
                 <Measure>
                   <ID>DateDimension_af944f43-81a8-45a0-9fba-7fef635b2f1a</ID>
-                  <Name>_Count DATE</Name>
+                  <Name>_Count TIMESHEET_DATE</Name>
                   <AggregateFunction>Count</AggregateFunction>
                   <DataType>BigInt</DataType>
                   <Source>
@@ -12316,6 +12812,420 @@
                   <Name>DateDimension</Name>
                   <Annotations>
                     <Annotation>
+                      <Name>TableWidgetSerialization</Name>
+                      <Value>&lt;?xml version="1.0" encoding="UTF-16"?&gt;&lt;Gemini xmlns="TableWidgetSerialization"&gt;&lt;AnnotationContent&gt;&lt;![CDATA[&lt;?xml version="1.0"?&gt;
+&lt;TableWidgetGridSerialization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ColumnSuggestedType /&gt;
+  &lt;ColumnFormat /&gt;
+  &lt;ColumnAccuracy /&gt;
+  &lt;ColumnCurrencySymbol /&gt;
+  &lt;ColumnPositivePattern /&gt;
+  &lt;ColumnNegativePattern /&gt;
+  &lt;ColumnWidths&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;id&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;38&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Day&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;49&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Month&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;60&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Year&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;52&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;quarter&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;66&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;date&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;52&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;day_of_week&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;95&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;wrk_hrs&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;68&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/ColumnWidths&gt;
+  &lt;ColumnDisplayIndex&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;id&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;0&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Day&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;1&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Month&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;2&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;Year&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;3&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;quarter&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;4&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;date&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;5&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;day_of_week&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;6&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;wrk_hrs&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;int&gt;7&lt;/int&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/ColumnDisplayIndex&gt;
+  &lt;ColumnFrozen /&gt;
+  &lt;ColumnChecked&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;day_of_week&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;boolean&gt;false&lt;/boolean&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+      &lt;key&gt;
+        &lt;string&gt;wrk_hrs&lt;/string&gt;
+      &lt;/key&gt;
+      &lt;value&gt;
+        &lt;boolean&gt;false&lt;/boolean&gt;
+      &lt;/value&gt;
+    &lt;/item&gt;
+  &lt;/ColumnChecked&gt;
+  &lt;ColumnFilter /&gt;
+  &lt;SelectionFilter /&gt;
+  &lt;FilterParameters /&gt;
+  &lt;IsSortDescending&gt;false&lt;/IsSortDescending&gt;
+&lt;/TableWidgetGridSerialization&gt;]]&gt;&lt;/AnnotationContent&gt;&lt;/Gemini&gt;</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>TableWidgetSourceTable</Name>
+                    </Annotation>
+                    <Annotation>
+                      <Name>QueryEditorSerialization</Name>
+                    </Annotation>
+                    <Annotation>
+                      <Name>IsQueryEditorUsed</Name>
+                      <Value>False</Value>
+                    </Annotation>
+                  </Annotations>
+                  <Source xsi:type="QueryBinding">
+                    <DataSourceID>95be2a12-575d-406d-9306-2564b244a468</DataSourceID>
+                    <QueryDefinition>SELECT [dbo].[DateDimension].[id],[dbo].[DateDimension].[Day],[dbo].[DateDimension].[Month],[dbo].[DateDimension].[Year],[dbo].[DateDimension].[quarter],[dbo].[DateDimension].[date] 		FROM [dbo].[DateDimension]</QueryDefinition>
+                  </Source>
+                  <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+                  <ProcessingMode>Regular</ProcessingMode>
+                  <ErrorConfiguration>
+                    <KeyNotFound>IgnoreError</KeyNotFound>
+                    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+                    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+                  </ErrorConfiguration>
+                  <ProactiveCaching>
+                    <SilenceInterval>-PT1S</SilenceInterval>
+                    <Latency>-PT1S</Latency>
+                    <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+                    <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+                    <Source xsi:type="ProactiveCachingInheritedBinding" />
+                  </ProactiveCaching>
+                </Partition>
+              </Partitions>
+              <ProactiveCaching>
+                <SilenceInterval>-PT1S</SilenceInterval>
+                <Latency>-PT1S</Latency>
+                <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+                <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+                <Source xsi:type="ProactiveCachingInheritedBinding" />
+              </ProactiveCaching>
+            </MeasureGroup>
+            <MeasureGroup>
+              <ID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</ID>
+              <Name>DEPT_EMP_COUNT_DATE</Name>
+              <Measures>
+                <Measure>
+                  <ID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</ID>
+                  <Name>_Count DEPT_EMP_COUNT_DATE</Name>
+                  <AggregateFunction>Count</AggregateFunction>
+                  <DataType>BigInt</DataType>
+                  <Source>
+                    <DataType>BigInt</DataType>
+                    <DataSize>8</DataSize>
+                    <Source xsi:type="RowBinding">
+                      <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                    </Source>
+                  </Source>
+                  <Visible>false</Visible>
+                </Measure>
+              </Measures>
+              <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+              <ErrorConfiguration>
+                <KeyNotFound>IgnoreError</KeyNotFound>
+                <KeyDuplicate>ReportAndStop</KeyDuplicate>
+                <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+              </ErrorConfiguration>
+              <ProcessingMode>Regular</ProcessingMode>
+              <Dimensions>
+                <Dimension xsi:type="DegenerateMeasureGroupDimension">
+                  <CubeDimensionID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>dept_emp_count</TableID>
+                            <ColumnID>RowNumber</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>emp_total</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>BigInt</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                            <ColumnID>emp_total</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>month</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>BigInt</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                            <ColumnID>month</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>year</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>BigInt</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                            <ColumnID>year</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>department_masterid</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>BigInt</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</TableID>
+                            <ColumnID>department_masterid</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                  </Attributes>
+                  <ddl200_200:ShareDimensionStorage>Shared</ddl200_200:ShareDimensionStorage>
+                </Dimension>
+                <Dimension xsi:type="ReferenceMeasureGroupDimension">
+                  <CubeDimensionID>V_DEPARTMENT_MASTER_5e96d101-e192-42de-95c8-4766bf80a933</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>4</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <Source xsi:type="ddl200_200:RowNumberBinding" />
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DEPARTMENT_MASTERID</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>BigInt</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>V_DEPARTMENT_MASTER_5e96d101-e192-42de-95c8-4766bf80a933</TableID>
+                            <ColumnID>DEPARTMENT_MASTERID</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>NAME</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>WChar</DataType>
+                          <DataSize>32768</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>V_DEPARTMENT_MASTER_5e96d101-e192-42de-95c8-4766bf80a933</TableID>
+                            <ColumnID>NAME</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DESCRIPTION</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>WChar</DataType>
+                          <DataSize>32768</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>V_DEPARTMENT_MASTER_5e96d101-e192-42de-95c8-4766bf80a933</TableID>
+                            <ColumnID>DESCRIPTION</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>CREATED_ON</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Date</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>V_DEPARTMENT_MASTER_5e96d101-e192-42de-95c8-4766bf80a933</TableID>
+                            <ColumnID>CREATED_ON</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_EXEMPTED</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>BigInt</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>V_DEPARTMENT_MASTER_5e96d101-e192-42de-95c8-4766bf80a933</TableID>
+                            <ColumnID>IS_EXEMPTED</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                  </Attributes>
+                  <IntermediateCubeDimensionID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</IntermediateCubeDimensionID>
+                  <IntermediateGranularityAttributeID>department_masterid</IntermediateGranularityAttributeID>
+                  <Materialization>Regular</Materialization>
+                  <ddl300:RelationshipID>47135880-2c19-4234-afb7-8b1739b9feb0</ddl300:RelationshipID>
+                </Dimension>
+              </Dimensions>
+              <Partitions>
+                <Partition>
+                  <ID>dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07</ID>
+                  <Name>dept_emp_count</Name>
+                  <Annotations>
+                    <Annotation>
                       <Name>IsQueryEditorUsed</Name>
                       <Value>False</Value>
                     </Annotation>
@@ -12328,7 +13238,7 @@
                   </Annotations>
                   <Source xsi:type="QueryBinding">
                     <DataSourceID>95be2a12-575d-406d-9306-2564b244a468</DataSourceID>
-                    <QueryDefinition>SELECT [dbo].[DateDimension].* 		FROM [dbo].[DateDimension]</QueryDefinition>
+                    <QueryDefinition>SELECT [dbo].[dept_emp_count].* 		FROM [dbo].[dept_emp_count]</QueryDefinition>
                   </Source>
                   <StorageMode valuens="ddl200_200">InMemory</StorageMode>
                   <ProcessingMode>Regular</ProcessingMode>
@@ -12374,11 +13284,39 @@ ALTER CUBE CURRENTCUBE UPDATE DIMENSION Measures, Default_Member = [__No measure
 ----------------------------------------------------------
 
 
+CREATE MEASURE 'TIMESHEET_DATE'[ACTUAL_WRK_HOURS]=SUM([ACTUAL_HOURS]);
+CREATE MEASURE 'DEPT_EMP_COUNT_DATE'[TOTAL_HOURS]=SUM(DEPT_EMP_COUNT_DATE[emp_total])*[ACTUAL_WRK_HOURS];
 CREATE MEASURE 'TIMESHEET'[EFFORT_TOTAL]=SUM([EFFORT]);
+CREATE MEMBER CURRENTCUBE.Measures.[_EFFORT_TOTAL Goal] AS 'Measures.[TOTAL_HOURS]', ASSOCIATED_MEASURE_GROUP = 'TIMESHEET';
+CREATE MEMBER CURRENTCUBE.Measures.[_EFFORT_TOTAL Status] AS 'Case When IsEmpty(KpiValue("EFFORT_TOTAL")) Then Null When KpiValue("EFFORT_TOTAL") * 100 / KpiGoal("EFFORT_TOTAL") &lt; 40 Then -1 When KpiValue("EFFORT_TOTAL") * 100 / KpiGoal("EFFORT_TOTAL") &gt;= 40 And KpiValue("EFFORT_TOTAL") * 100 / KpiGoal("EFFORT_TOTAL") &lt; 80 Then 0 Else 1 End', ASSOCIATED_MEASURE_GROUP = 'TIMESHEET';
+CREATE MEMBER CURRENTCUBE.Measures.[_EFFORT_TOTAL Trend] AS '0', ASSOCIATED_MEASURE_GROUP = 'TIMESHEET';
+CREATE KPI CURRENTCUBE.[EFFORT_TOTAL] AS Measures.[EFFORT_TOTAL], ASSOCIATED_MEASURE_GROUP = 'TIMESHEET', GOAL = Measures.[_EFFORT_TOTAL Goal], STATUS = Measures.[_EFFORT_TOTAL Status], TREND = Measures.[_EFFORT_TOTAL Trend], STATUS_GRAPHIC = 'Three Circles Colored', TREND_GRAPHIC = 'Three Circles Colored';
 </Text>
                 </Command>
               </Commands>
               <CalculationProperties>
+                <CalculationProperty>
+                  <Annotations>
+                    <Annotation>
+                      <Name>Type</Name>
+                      <Value>User</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>IsPrivate</Name>
+                      <Value>True</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>Format</Name>
+                      <Value>
+                        <Format Format="General" xmlns="" />
+                      </Value>
+                    </Annotation>
+                  </Annotations>
+                  <CalculationReference>[ACTUAL_WRK_HOURS]</CalculationReference>
+                  <CalculationType>Member</CalculationType>
+                  <Visible>false</Visible>
+                  <FormatString>''</FormatString>
+                </CalculationProperty>
                 <CalculationProperty>
                   <Annotations>
                     <Annotation>
@@ -12396,9 +13334,153 @@ CREATE MEASURE 'TIMESHEET'[EFFORT_TOTAL]=SUM([EFFORT]);
                       </Value>
                     </Annotation>
                   </Annotations>
+                  <CalculationReference>[TOTAL_HOURS]</CalculationReference>
+                  <CalculationType>Member</CalculationType>
+                  <FormatString>''</FormatString>
+                </CalculationProperty>
+                <CalculationProperty>
+                  <Annotations>
+                    <Annotation>
+                      <Name>Type</Name>
+                      <Value>Kpi</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>IsPrivate</Name>
+                      <Value>False</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>Format</Name>
+                      <Value>
+                        <Format Format="General" xmlns="" />
+                      </Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>GoalType</Name>
+                      <Value>Measure</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>KpiStatusType</Name>
+                      <Value>Linear</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>KpiThresholdType</Name>
+                      <Value>Percentage</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>KpiThresholdOrdering</Name>
+                      <Value>Ascending</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>KpiThresholdCount</Name>
+                      <Value>2</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>KpiThreshold_0</Name>
+                      <Value>40</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>KpiThreshold_1</Name>
+                      <Value>80</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>ValueDescription</Name>
+                    </Annotation>
+                    <Annotation>
+                      <Name>GoalDescription</Name>
+                    </Annotation>
+                    <Annotation>
+                      <Name>StatusDescription</Name>
+                    </Annotation>
+                    <Annotation>
+                      <Name>TrendDescription</Name>
+                    </Annotation>
+                    <Annotation>
+                      <Name>GoalMeasure</Name>
+                      <Value>TOTAL_HOURS</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>GoalMeasureTableName</Name>
+                      <Value>DEPT_EMP_COUNT_DATE</Value>
+                    </Annotation>
+                  </Annotations>
                   <CalculationReference>[EFFORT_TOTAL]</CalculationReference>
                   <CalculationType>Member</CalculationType>
                   <FormatString>''</FormatString>
+                </CalculationProperty>
+                <CalculationProperty>
+                  <Annotations>
+                    <Annotation>
+                      <Name>Type</Name>
+                      <Value>SupportMdx</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>MainObjectType</Name>
+                      <Value>Measure</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>MainObjectName</Name>
+                      <Value>EFFORT_TOTAL</Value>
+                    </Annotation>
+                  </Annotations>
+                  <CalculationReference>Measures.[_EFFORT_TOTAL Goal]</CalculationReference>
+                  <CalculationType>Member</CalculationType>
+                  <Visible>false</Visible>
+                </CalculationProperty>
+                <CalculationProperty>
+                  <Annotations>
+                    <Annotation>
+                      <Name>Type</Name>
+                      <Value>SupportMdx</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>MainObjectType</Name>
+                      <Value>Measure</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>MainObjectName</Name>
+                      <Value>EFFORT_TOTAL</Value>
+                    </Annotation>
+                  </Annotations>
+                  <CalculationReference>Measures.[_EFFORT_TOTAL Status]</CalculationReference>
+                  <CalculationType>Member</CalculationType>
+                  <Visible>false</Visible>
+                </CalculationProperty>
+                <CalculationProperty>
+                  <Annotations>
+                    <Annotation>
+                      <Name>Type</Name>
+                      <Value>SupportMdx</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>MainObjectType</Name>
+                      <Value>Measure</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>MainObjectName</Name>
+                      <Value>EFFORT_TOTAL</Value>
+                    </Annotation>
+                  </Annotations>
+                  <CalculationReference>Measures.[_EFFORT_TOTAL Trend]</CalculationReference>
+                  <CalculationType>Member</CalculationType>
+                  <Visible>false</Visible>
+                </CalculationProperty>
+                <CalculationProperty>
+                  <Annotations>
+                    <Annotation>
+                      <Name>Type</Name>
+                      <Value>SupportKpi</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>MainObjectType</Name>
+                      <Value>Measure</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>MainObjectName</Name>
+                      <Value>EFFORT_TOTAL</Value>
+                    </Annotation>
+                  </Annotations>
+                  <CalculationReference>KPIs.[EFFORT_TOTAL]</CalculationReference>
+                  <CalculationType>Member</CalculationType>
                 </CalculationProperty>
                 <CalculationProperty>
                   <CalculationReference>Measures.[__No measures defined]</CalculationReference>
@@ -12814,7 +13896,7 @@ CREATE MEASURE 'TIMESHEET'[EFFORT_TOTAL]=SUM([EFFORT]);
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="DateDimension_af944f43-81a8-45a0-9fba-7fef635b2f1a" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="DATE" msprop:DbSchemaName="dbo" msprop:DbTableName="DateDimension" msprop:TableType="View" msprop:Description="DateDimension" msprop:QueryDefinition="      SELECT [dbo].[DateDimension].*   FROM [dbo].[DateDimension] ">
+                    <xs:element name="DateDimension_af944f43-81a8-45a0-9fba-7fef635b2f1a" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="TIMESHEET_DATE" msprop:DbSchemaName="dbo" msprop:DbTableName="DateDimension" msprop:TableType="View" msprop:Description="DateDimension" msprop:QueryDefinition="      SELECT [dbo].[DateDimension].[id],[dbo].[DateDimension].[Day],[dbo].[DateDimension].[Month],[dbo].[DateDimension].[Year],[dbo].[DateDimension].[quarter],[dbo].[DateDimension].[date]   FROM [dbo].[DateDimension] ">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="id" msprop:DbColumnName="id" msprop:FriendlyName="id" type="xs:long" />
@@ -12823,13 +13905,16 @@ CREATE MEASURE 'TIMESHEET'[EFFORT_TOTAL]=SUM([EFFORT]);
                           <xs:element name="Year" msprop:DbColumnName="Year" msprop:FriendlyName="Year" type="xs:long" minOccurs="0" />
                           <xs:element name="quarter" msprop:DbColumnName="quarter" msprop:FriendlyName="quarter" type="xs:long" minOccurs="0" />
                           <xs:element name="date" msprop:DbColumnName="date" msprop:FriendlyName="date" type="xs:dateTime" minOccurs="0" />
-                          <xs:element name="datevarchar" msprop:DbColumnName="datevarchar" msprop:FriendlyName="datevarchar" minOccurs="0">
-                            <xs:simpleType>
-                              <xs:restriction base="xs:string">
-                                <xs:maxLength value="32768" />
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="dept_emp_count_26d31f0c-a70a-4583-8adc-a0dc15b7ca07" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="DEPT_EMP_COUNT_DATE" msprop:DbSchemaName="dbo" msprop:DbTableName="dept_emp_count" msprop:TableType="View" msprop:Description="dept_emp_count" msprop:QueryDefinition="      SELECT [dbo].[dept_emp_count].*   FROM [dbo].[dept_emp_count] ">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="emp_total" msprop:DbColumnName="emp_total" msprop:FriendlyName="emp_total" type="xs:long" minOccurs="0" />
+                          <xs:element name="month" msprop:DbColumnName="month" msprop:FriendlyName="month" type="xs:long" minOccurs="0" />
+                          <xs:element name="year" msprop:DbColumnName="year" msprop:FriendlyName="year" type="xs:long" minOccurs="0" />
+                          <xs:element name="department_masterid" msprop:DbColumnName="department_masterid" msprop:FriendlyName="department_masterid" type="xs:long" minOccurs="0" />
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
