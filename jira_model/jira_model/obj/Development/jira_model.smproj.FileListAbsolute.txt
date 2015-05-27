@@ -4,3 +4,9 @@ E:\workarea\model\jira_model\jira_model\bin\Model.deploymentoptions
 E:\workarea\model\jira_model\jira_model\obj\Development\Model.asdatabase
 E:\workarea\model\jira_model\jira_model\obj\Development\Model.deploymentoptions
 E:\workarea\model\jira_model\jira_model\obj\Development\Model.deploymenttargets
+E:\workarea\model_bck\jira_model\jira_model\bin\Model.asdatabase
+E:\workarea\model_bck\jira_model\jira_model\bin\Model.deploymenttargets
+E:\workarea\model_bck\jira_model\jira_model\bin\Model.deploymentoptions
+E:\workarea\model_bck\jira_model\jira_model\obj\Development\Model.asdatabase
+E:\workarea\model_bck\jira_model\jira_model\obj\Development\Model.deploymentoptions
+E:\workarea\model_bck\jira_model\jira_model\obj\Development\Model.deploymenttargets

@@ -1467,6 +1467,26 @@
                   <OverrideBehavior>None</OverrideBehavior>
                   <Name>BILLABLE</Name>
                 </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>DAYS_</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>DAYS</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>SLA_VALUE</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>SLA</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>DEFECT_CATEGORY</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>DEFECT_CATEGORY</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>ISSUE_CRT_DT</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>ISSUE_MODIFIED_DT</Name>
+                </AttributeRelationship>
               </AttributeRelationships>
               <OrderBy>Key</OrderBy>
               <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
@@ -2183,7 +2203,6 @@
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
-              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
             </Attribute>
             <Attribute>
               <Annotations>
@@ -2729,14 +2748,14 @@
                 <KeyColumn>
                   <DataType>Empty</DataType>
                   <Source xsi:type="ddl200_200:ExpressionBinding">
-                    <Expression>LOOKUPVALUE(ISSUE_STATUS[value],ISSUE_STATUS[id],ISSUE[ISSUE_STATUS_MASTERID])</Expression>
+                    <Expression>LOOKUPVALUE(ISSUE_STATUS[ISSUE_STATUS],ISSUE_STATUS[id],ISSUE[ISSUE_STATUS_MASTERID])</Expression>
                   </Source>
                 </KeyColumn>
               </KeyColumns>
               <NameColumn>
                 <DataType>WChar</DataType>
                 <Source xsi:type="ddl200_200:ExpressionBinding">
-                  <Expression>LOOKUPVALUE(ISSUE_STATUS[value],ISSUE_STATUS[id],ISSUE[ISSUE_STATUS_MASTERID])</Expression>
+                  <Expression>LOOKUPVALUE(ISSUE_STATUS[ISSUE_STATUS],ISSUE_STATUS[id],ISSUE[ISSUE_STATUS_MASTERID])</Expression>
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
@@ -2756,14 +2775,14 @@
                 <KeyColumn>
                   <DataType>Empty</DataType>
                   <Source xsi:type="ddl200_200:ExpressionBinding">
-                    <Expression>LOOKUPVALUE(ISSUE_SEVERITY[value],ISSUE_SEVERITY[issueseveritymasterid],ISSUE[ISSUE_SEVERITY_MASTERID])</Expression>
+                    <Expression>LOOKUPVALUE(ISSUE_SEVERITY[ISSUE_SEVERITY],ISSUE_SEVERITY[issueseveritymasterid],ISSUE[ISSUE_SEVERITY_MASTERID])</Expression>
                   </Source>
                 </KeyColumn>
               </KeyColumns>
               <NameColumn>
                 <DataType>WChar</DataType>
                 <Source xsi:type="ddl200_200:ExpressionBinding">
-                  <Expression>LOOKUPVALUE(ISSUE_SEVERITY[value],ISSUE_SEVERITY[issueseveritymasterid],ISSUE[ISSUE_SEVERITY_MASTERID])</Expression>
+                  <Expression>LOOKUPVALUE(ISSUE_SEVERITY[ISSUE_SEVERITY],ISSUE_SEVERITY[issueseveritymasterid],ISSUE[ISSUE_SEVERITY_MASTERID])</Expression>
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
@@ -2783,14 +2802,14 @@
                 <KeyColumn>
                   <DataType>Empty</DataType>
                   <Source xsi:type="ddl200_200:ExpressionBinding">
-                    <Expression>LOOKUPVALUE(ISSUE_PRIORITY[value],ISSUE_PRIORITY[issueprioritymasterid],ISSUE[ISSUE_PRIORITY_MASTERID])</Expression>
+                    <Expression>LOOKUPVALUE(ISSUE_PRIORITY[ISSUE_PRIORITY],ISSUE_PRIORITY[issueprioritymasterid],ISSUE[ISSUE_PRIORITY_MASTERID])</Expression>
                   </Source>
                 </KeyColumn>
               </KeyColumns>
               <NameColumn>
                 <DataType>WChar</DataType>
                 <Source xsi:type="ddl200_200:ExpressionBinding">
-                  <Expression>LOOKUPVALUE(ISSUE_PRIORITY[value],ISSUE_PRIORITY[issueprioritymasterid],ISSUE[ISSUE_PRIORITY_MASTERID])</Expression>
+                  <Expression>LOOKUPVALUE(ISSUE_PRIORITY[ISSUE_PRIORITY],ISSUE_PRIORITY[issueprioritymasterid],ISSUE[ISSUE_PRIORITY_MASTERID])</Expression>
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
@@ -2810,17 +2829,158 @@
                 <KeyColumn>
                   <DataType>Empty</DataType>
                   <Source xsi:type="ddl200_200:ExpressionBinding">
-                    <Expression>IF(ISSUE[IS_BILLABLE]=0 ,"NO","YES")</Expression>
+                    <Expression>SWITCH(ISSUE[IS_BILLABLE],0,"NON BILLABLE",1,"BILLABLE",2,"FREE WORK")</Expression>
                   </Source>
                 </KeyColumn>
               </KeyColumns>
               <NameColumn>
                 <DataType>WChar</DataType>
                 <Source xsi:type="ddl200_200:ExpressionBinding">
-                  <Expression>IF(ISSUE[IS_BILLABLE]=0 ,"NO","YES")</Expression>
+                  <Expression>SWITCH(ISSUE[IS_BILLABLE],0,"NON BILLABLE",1,"BILLABLE",2,"FREE WORK")</Expression>
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>DAYS_</ID>
+              <Name>DAYS</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>1*(DATE(Year(ISSUE[LAST_MODIFIED_ON]),MONTH(ISSUE[LAST_MODIFIED_ON]),DAY(ISSUE[LAST_MODIFIED_ON]))-DATE(YEAR(ISSUE[CREATED_ON]),MONTH(ISSUE[CREATED_ON]),DAY(ISSUE[CREATED_ON])))</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>1*(DATE(Year(ISSUE[LAST_MODIFIED_ON]),MONTH(ISSUE[LAST_MODIFIED_ON]),DAY(ISSUE[LAST_MODIFIED_ON]))-DATE(YEAR(ISSUE[CREATED_ON]),MONTH(ISSUE[CREATED_ON]),DAY(ISSUE[CREATED_ON])))</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="Text" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>SLA_VALUE</ID>
+              <Name>SLA</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>IF(
+      OR(
+          OR(
+            OR(ISSUE[ISSUE_STATUS] ="Assigned",ISSUE[ISSUE_STATUS]="Open"),
+            ISSUE[ISSUE_STATUS]="New"
+            )
+            ,ISSUE[ISSUE_STATUS]="reopen"
+        ),"SLA","NON SLA"
+    )</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>IF(
+      OR(
+          OR(
+            OR(ISSUE[ISSUE_STATUS] ="Assigned",ISSUE[ISSUE_STATUS]="Open"),
+            ISSUE[ISSUE_STATUS]="New"
+            )
+            ,ISSUE[ISSUE_STATUS]="reopen"
+        ),"SLA","NON SLA"
+    )</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="Text" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>DEFECT_CATEGORY</ID>
+              <Name>DEFECT_CATEGORY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>IF( ISSUE[DAYS]&lt;30,"Below 30 days",
+    if(AND(ISSUE[DAYS]&gt;=30,ISSUE[DAYS]&lt;50),"30-49 days",
+    if(AND(ISSUE[DAYS]&gt;49,ISSUE[DAYS]&lt;100),"50-99 days",
+    if(AND(ISSUE[DAYS]&gt;99,ISSUE[DAYS]&lt;500),"100-499 days",
+    if(AND(ISSUE[DAYS]&gt;499,ISSUE[DAYS]&lt;1000),"500-999 days",
+    if(ISSUE[DAYS]&gt;999,"Above 1000 days",""
+    ))))))</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>IF( ISSUE[DAYS]&lt;30,"Below 30 days",
+    if(AND(ISSUE[DAYS]&gt;=30,ISSUE[DAYS]&lt;50),"30-49 days",
+    if(AND(ISSUE[DAYS]&gt;49,ISSUE[DAYS]&lt;100),"50-99 days",
+    if(AND(ISSUE[DAYS]&gt;99,ISSUE[DAYS]&lt;500),"100-499 days",
+    if(AND(ISSUE[DAYS]&gt;499,ISSUE[DAYS]&lt;1000),"500-999 days",
+    if(ISSUE[DAYS]&gt;999,"Above 1000 days",""
+    ))))))</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="DateTimeGeneral" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>ISSUE_CRT_DT</ID>
+              <Name>ISSUE_MODIFIED_DT</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>DATE(YEAR(ISSUE[LAST_MODIFIED_ON]),MONTH(ISSUE[LAST_MODIFIED_ON]),day(ISSUE[LAST_MODIFIED_ON]))</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>DATE(YEAR(ISSUE[LAST_MODIFIED_ON]),MONTH(ISSUE[LAST_MODIFIED_ON]),day(ISSUE[LAST_MODIFIED_ON]))</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+              <ddl300_300:FormatString>General Date</ddl300_300:FormatString>
             </Attribute>
           </Attributes>
           <ProactiveCaching>
@@ -2969,11 +3129,80 @@
                 </Attributes>
               </ddl300_300:ToRelationshipEnd>
             </ddl300_300:Relationship>
+            <ddl300_300:Relationship>
+              <ID>8b67f411-687e-48b1-8d1e-56a730a85ac0</ID>
+              <ddl300_300:FromRelationshipEnd>
+                <ddl300_300:Multiplicity>Many</ddl300_300:Multiplicity>
+                <ddl300:VisualizationProperties />
+                <DimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</DimensionID>
+                <Attributes>
+                  <Attribute>
+                    <AttributeID>SLA_VALUE</AttributeID>
+                  </Attribute>
+                </Attributes>
+              </ddl300_300:FromRelationshipEnd>
+              <ddl300_300:ToRelationshipEnd>
+                <ddl300_300:Multiplicity>One</ddl300_300:Multiplicity>
+                <ddl300:VisualizationProperties />
+                <DimensionID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</DimensionID>
+                <Attributes>
+                  <Attribute>
+                    <AttributeID>sla</AttributeID>
+                  </Attribute>
+                </Attributes>
+              </ddl300_300:ToRelationshipEnd>
+            </ddl300_300:Relationship>
+            <ddl300_300:Relationship>
+              <ID>1ea61ae0-f78e-4302-8110-6b691111d30b</ID>
+              <ddl300_300:FromRelationshipEnd>
+                <ddl300_300:Multiplicity>Many</ddl300_300:Multiplicity>
+                <ddl300:VisualizationProperties />
+                <DimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</DimensionID>
+                <Attributes>
+                  <Attribute>
+                    <AttributeID>DEFECT_CATEGORY</AttributeID>
+                  </Attribute>
+                </Attributes>
+              </ddl300_300:FromRelationshipEnd>
+              <ddl300_300:ToRelationshipEnd>
+                <ddl300_300:Multiplicity>One</ddl300_300:Multiplicity>
+                <ddl300:VisualizationProperties />
+                <DimensionID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</DimensionID>
+                <Attributes>
+                  <Attribute>
+                    <AttributeID>DEFECT_CATEGORY</AttributeID>
+                  </Attribute>
+                </Attributes>
+              </ddl300_300:ToRelationshipEnd>
+            </ddl300_300:Relationship>
+            <ddl300_300:Relationship>
+              <ID>e2f49f25-7754-4144-9140-704c30fb4683</ID>
+              <ddl300_300:FromRelationshipEnd>
+                <ddl300_300:Multiplicity>Many</ddl300_300:Multiplicity>
+                <ddl300:VisualizationProperties />
+                <DimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</DimensionID>
+                <Attributes>
+                  <Attribute>
+                    <AttributeID>ISSUE_CRT_DT</AttributeID>
+                  </Attribute>
+                </Attributes>
+              </ddl300_300:FromRelationshipEnd>
+              <ddl300_300:ToRelationshipEnd>
+                <ddl300_300:Multiplicity>One</ddl300_300:Multiplicity>
+                <ddl300:VisualizationProperties />
+                <DimensionID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</DimensionID>
+                <Attributes>
+                  <Attribute>
+                    <AttributeID>date</AttributeID>
+                  </Attribute>
+                </Attributes>
+              </ddl300_300:ToRelationshipEnd>
+            </ddl300_300:Relationship>
           </ddl300_300:Relationships>
         </Dimension>
         <Dimension>
           <ID>V_ISSUETYPE_MASTER_3150cd46-eac0-4a98-923b-61663128a04e</ID>
-          <Name>ISSUETYPE</Name>
+          <Name>ISSUE_TYPE</Name>
           <Annotations>
             <Annotation>
               <Name>IsQueryEditorUsed</Name>
@@ -4838,7 +5067,7 @@
                 <AttributeRelationship>
                   <AttributeID>value</AttributeID>
                   <OverrideBehavior>None</OverrideBehavior>
-                  <Name>value</Name>
+                  <Name>ISSUE_PRIORITY</Name>
                 </AttributeRelationship>
                 <AttributeRelationship>
                   <AttributeID>description</AttributeID>
@@ -4941,7 +5170,7 @@
                 </Annotation>
               </Annotations>
               <ID>value</ID>
-              <Name>value</Name>
+              <Name>ISSUE_PRIORITY</Name>
               <KeyColumns>
                 <KeyColumn>
                   <DataType>WChar</DataType>
@@ -5147,7 +5376,7 @@
                 <AttributeRelationship>
                   <AttributeID>value</AttributeID>
                   <OverrideBehavior>None</OverrideBehavior>
-                  <Name>value</Name>
+                  <Name>ISSUE_SEVERITY</Name>
                 </AttributeRelationship>
                 <AttributeRelationship>
                   <AttributeID>isdisabled</AttributeID>
@@ -5214,7 +5443,7 @@
                 </Annotation>
               </Annotations>
               <ID>value</ID>
-              <Name>value</Name>
+              <Name>ISSUE_SEVERITY</Name>
               <KeyColumns>
                 <KeyColumn>
                   <DataType>WChar</DataType>
@@ -5426,7 +5655,7 @@
                 <AttributeRelationship>
                   <AttributeID>value</AttributeID>
                   <OverrideBehavior>None</OverrideBehavior>
-                  <Name>value</Name>
+                  <Name>ISSUE_STATUS</Name>
                 </AttributeRelationship>
                 <AttributeRelationship>
                   <AttributeID>description</AttributeID>
@@ -5529,7 +5758,7 @@
                 </Annotation>
               </Annotations>
               <ID>value</ID>
-              <Name>value</Name>
+              <Name>ISSUE_STATUS</Name>
               <KeyColumns>
                 <KeyColumn>
                   <DataType>WChar</DataType>
@@ -6077,6 +6306,16 @@
                   <OverrideBehavior>None</OverrideBehavior>
                   <Name>ACTUAL_HOURS</Name>
                 </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>CalculatedColumn1</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>IS_INDIAN_HOLIDAY</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>IS_US_HOLIDAY</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>IS_US_HOLIDAY</Name>
+                </AttributeRelationship>
               </AttributeRelationships>
               <OrderBy>Key</OrderBy>
               <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
@@ -6376,6 +6615,62 @@
               <OrderBy>Key</OrderBy>
               <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
             </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>CalculatedColumn1</ID>
+              <Name>IS_INDIAN_HOLIDAY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>IS_US_HOLIDAY</ID>
+              <Name>IS_US_HOLIDAY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
           </Attributes>
           <ProactiveCaching>
             <SilenceInterval>-PT1S</SilenceInterval>
@@ -6447,7 +6742,7 @@
                 <AttributeRelationship>
                   <AttributeID>month</AttributeID>
                   <OverrideBehavior>None</OverrideBehavior>
-                  <Name>month</Name>
+                  <Name>month_no</Name>
                 </AttributeRelationship>
                 <AttributeRelationship>
                   <AttributeID>year</AttributeID>
@@ -6458,6 +6753,11 @@
                   <AttributeID>department_masterid</AttributeID>
                   <OverrideBehavior>None</OverrideBehavior>
                   <Name>department_masterid</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>Month 1</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>Month</Name>
                 </AttributeRelationship>
               </AttributeRelationships>
               <OrderBy>Key</OrderBy>
@@ -6509,7 +6809,7 @@
                 </Annotation>
               </Annotations>
               <ID>month</ID>
-              <Name>month</Name>
+              <Name>month_no</Name>
               <KeyColumns>
                 <KeyColumn>
                   <DataType>BigInt</DataType>
@@ -6533,6 +6833,7 @@
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
             </Attribute>
             <Attribute>
               <Annotations>
@@ -6605,6 +6906,33 @@
               <OrderBy>Key</OrderBy>
               <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
             </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="Text" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>Month 1</ID>
+              <Name>Month</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],DEPT_EMP_COUNT_DATE[month_no])</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],DEPT_EMP_COUNT_DATE[month_no])</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
           </Attributes>
           <ProactiveCaching>
             <SilenceInterval>-PT1S</SilenceInterval>
@@ -6638,6 +6966,776 @@
               </ddl300_300:ToRelationshipEnd>
             </ddl300_300:Relationship>
           </ddl300_300:Relationships>
+        </Dimension>
+        <Dimension>
+          <ID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</ID>
+          <Name>ISSUE_DATE</Name>
+          <Annotations>
+            <Annotation>
+              <Name>IsQueryEditorUsed</Name>
+              <Value>True</Value>
+            </Annotation>
+            <Annotation>
+              <Name>QueryEditorSerialization</Name>
+            </Annotation>
+            <Annotation>
+              <Name>TableWidgetSerialization</Name>
+            </Annotation>
+            <Annotation>
+              <Name>DataMarketWebBaseUrl</Name>
+            </Annotation>
+            <Annotation>
+              <Name>DataMarketWebQueryUrl</Name>
+            </Annotation>
+          </Annotations>
+          <Source xsi:type="DataSourceViewBinding">
+            <DataSourceViewID>Sandbox</DataSourceViewID>
+          </Source>
+          <UnknownMember valuens="ddl200_200">AutomaticNull</UnknownMember>
+          <ErrorConfiguration>
+            <KeyNotFound>IgnoreError</KeyNotFound>
+            <KeyDuplicate>ReportAndStop</KeyDuplicate>
+            <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+          </ErrorConfiguration>
+          <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+          <Language>1033</Language>
+          <UnknownMemberName>Unknown</UnknownMemberName>
+          <Attributes>
+            <Attribute>
+              <ID>RowNumber</ID>
+              <Name>RowNumber</Name>
+              <Type valuens="ddl200_200">RowNumber</Type>
+              <Usage>Key</Usage>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>4</DataSize>
+                  <NullProcessing>Error</NullProcessing>
+                  <Source xsi:type="ddl200_200:RowNumberBinding" />
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>4</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <Source xsi:type="ddl200_200:RowNumberBinding" />
+              </NameColumn>
+              <AttributeRelationships>
+                <AttributeRelationship>
+                  <AttributeID>id</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>id_</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>Day</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>DAY 1</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>Month</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>Month</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>Year</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>YEAR 1</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>quarter</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>QUARTER 1</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>date</AttributeID>
+                  <Cardinality>One</Cardinality>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>DATE 1</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>day_of_week</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>DAY_OF_WEEK 1</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>wrk_hrs</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>wrk_hrs</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>Add Column2</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>MONTH_NAME</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>WEEK_DAY</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>WEEK_DAY</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>ACTUAL_HOURS</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>ACTUAL_HOURS</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>IS_INDIAN_HOLIDAY</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>IS_INDIAN_HOLIDAY</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>IS_US_HOLIDAY</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>IS_US_HOLIDAY</Name>
+                </AttributeRelationship>
+              </AttributeRelationships>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>id</ID>
+              <Name>id</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                    <ColumnID>id</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                  <ColumnID>id</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>Day</ID>
+              <Name>DAY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                    <ColumnID>Day</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                  <ColumnID>Day</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>Month</ID>
+              <Name>Month</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                    <ColumnID>Month</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                  <ColumnID>Month</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>Year</ID>
+              <Name>YEAR</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                    <ColumnID>Year</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                  <ColumnID>Year</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>quarter</ID>
+              <Name>QUARTER</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                    <ColumnID>quarter</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                  <ColumnID>quarter</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="DateTimeGeneral" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>date</ID>
+              <Name>DATE</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Date</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Error</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                    <ColumnID>date</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                  <ColumnID>date</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <ddl300_300:FormatString>General Date</ddl300_300:FormatString>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>day_of_week</ID>
+              <Name>DAY_OF_WEEK</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                    <ColumnID>day_of_week</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                  <ColumnID>day_of_week</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>wrk_hrs</ID>
+              <Name>wrk_hrs</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Double</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                    <ColumnID>wrk_hrs</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                  <ColumnID>wrk_hrs</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="Text" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>Add Column2</ID>
+              <Name>MONTH_NAME</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ISSUE_DATE[MONTH])</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ISSUE_DATE[MONTH])</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>WEEK_DAY</ID>
+              <Name>WEEK_DAY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>WEEKDAY(ISSUE_DATE[DATE])</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>WEEKDAY(ISSUE_DATE[DATE])</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>ACTUAL_HOURS</ID>
+              <Name>ACTUAL_HOURS</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>IF(OR([WEEK_DAY]=7,[WEEK_DAY]=1),0,8)</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>IF(OR([WEEK_DAY]=7,[WEEK_DAY]=1),0,8)</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>IS_INDIAN_HOLIDAY</ID>
+              <Name>IS_INDIAN_HOLIDAY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>IS_US_HOLIDAY</ID>
+              <Name>IS_US_HOLIDAY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+          </Attributes>
+          <ProactiveCaching>
+            <SilenceInterval>-PT1S</SilenceInterval>
+            <Latency>-PT1S</Latency>
+            <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+            <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+            <Source xsi:type="ProactiveCachingInheritedBinding" />
+          </ProactiveCaching>
+        </Dimension>
+        <Dimension>
+          <ID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</ID>
+          <Name>ISSUE_SLA_VALUE</Name>
+          <Annotations>
+            <Annotation>
+              <Name>IsQueryEditorUsed</Name>
+              <Value>True</Value>
+            </Annotation>
+            <Annotation>
+              <Name>QueryEditorSerialization</Name>
+            </Annotation>
+            <Annotation>
+              <Name>TableWidgetSerialization</Name>
+            </Annotation>
+            <Annotation>
+              <Name>DataMarketWebBaseUrl</Name>
+            </Annotation>
+            <Annotation>
+              <Name>DataMarketWebQueryUrl</Name>
+            </Annotation>
+          </Annotations>
+          <Source xsi:type="DataSourceViewBinding">
+            <DataSourceViewID>Sandbox</DataSourceViewID>
+          </Source>
+          <UnknownMember valuens="ddl200_200">AutomaticNull</UnknownMember>
+          <ErrorConfiguration>
+            <KeyNotFound>IgnoreError</KeyNotFound>
+            <KeyDuplicate>ReportAndStop</KeyDuplicate>
+            <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+          </ErrorConfiguration>
+          <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+          <Language>1033</Language>
+          <UnknownMemberName>Unknown</UnknownMemberName>
+          <Attributes>
+            <Attribute>
+              <ID>RowNumber</ID>
+              <Name>RowNumber</Name>
+              <Type valuens="ddl200_200">RowNumber</Type>
+              <Usage>Key</Usage>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>4</DataSize>
+                  <NullProcessing>Error</NullProcessing>
+                  <Source xsi:type="ddl200_200:RowNumberBinding" />
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>4</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <Source xsi:type="ddl200_200:RowNumberBinding" />
+              </NameColumn>
+              <AttributeRelationships>
+                <AttributeRelationship>
+                  <AttributeID>sla</AttributeID>
+                  <Cardinality>One</Cardinality>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>SLA 1</Name>
+                </AttributeRelationship>
+              </AttributeRelationships>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="Text" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>sla</ID>
+              <Name>SLA</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>WChar</DataType>
+                  <DataSize>32768</DataSize>
+                  <NullProcessing>Error</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</TableID>
+                    <ColumnID>sla</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>32768</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</TableID>
+                  <ColumnID>sla</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+          </Attributes>
+          <ProactiveCaching>
+            <SilenceInterval>-PT1S</SilenceInterval>
+            <Latency>-PT1S</Latency>
+            <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+            <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+            <Source xsi:type="ProactiveCachingInheritedBinding" />
+          </ProactiveCaching>
+        </Dimension>
+        <Dimension>
+          <ID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</ID>
+          <Name>ISSUE_CATEGORY</Name>
+          <Annotations>
+            <Annotation>
+              <Name>IsQueryEditorUsed</Name>
+              <Value>True</Value>
+            </Annotation>
+            <Annotation>
+              <Name>QueryEditorSerialization</Name>
+            </Annotation>
+            <Annotation>
+              <Name>TableWidgetSerialization</Name>
+            </Annotation>
+            <Annotation>
+              <Name>DataMarketWebBaseUrl</Name>
+            </Annotation>
+            <Annotation>
+              <Name>DataMarketWebQueryUrl</Name>
+            </Annotation>
+          </Annotations>
+          <Source xsi:type="DataSourceViewBinding">
+            <DataSourceViewID>Sandbox</DataSourceViewID>
+          </Source>
+          <UnknownMember valuens="ddl200_200">AutomaticNull</UnknownMember>
+          <ErrorConfiguration>
+            <KeyNotFound>IgnoreError</KeyNotFound>
+            <KeyDuplicate>ReportAndStop</KeyDuplicate>
+            <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+          </ErrorConfiguration>
+          <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+          <Language>1033</Language>
+          <UnknownMemberName>Unknown</UnknownMemberName>
+          <Attributes>
+            <Attribute>
+              <ID>RowNumber</ID>
+              <Name>RowNumber</Name>
+              <Type valuens="ddl200_200">RowNumber</Type>
+              <Usage>Key</Usage>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>4</DataSize>
+                  <NullProcessing>Error</NullProcessing>
+                  <Source xsi:type="ddl200_200:RowNumberBinding" />
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>4</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <Source xsi:type="ddl200_200:RowNumberBinding" />
+              </NameColumn>
+              <AttributeRelationships>
+                <AttributeRelationship>
+                  <AttributeID>DEFECT_CATEGORY</AttributeID>
+                  <Cardinality>One</Cardinality>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>DEFECT_CATEGORY</Name>
+                </AttributeRelationship>
+              </AttributeRelationships>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="Text" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>DEFECT_CATEGORY</ID>
+              <Name>DEFECT_CATEGORY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>WChar</DataType>
+                  <DataSize>32768</DataSize>
+                  <NullProcessing>Error</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</TableID>
+                    <ColumnID>DEFECT_CATEGORY</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>32768</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</TableID>
+                  <ColumnID>DEFECT_CATEGORY</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+          </Attributes>
+          <ProactiveCaching>
+            <SilenceInterval>-PT1S</SilenceInterval>
+            <Latency>-PT1S</Latency>
+            <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+            <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+            <Source xsi:type="ProactiveCachingInheritedBinding" />
+          </ProactiveCaching>
         </Dimension>
       </Dimensions>
       <Cubes>
@@ -6838,7 +7936,6 @@
                 </Attribute>
                 <Attribute>
                   <AttributeID>IS_BILLABLE</AttributeID>
-                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
                 </Attribute>
                 <Attribute>
                   <AttributeID>MODULE_MASTERID</AttributeID>
@@ -6901,11 +7998,27 @@
                 <Attribute>
                   <AttributeID>BILLABLE</AttributeID>
                 </Attribute>
+                <Attribute>
+                  <AttributeID>DAYS_</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>SLA_VALUE</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>DEFECT_CATEGORY</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>ISSUE_CRT_DT</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
               </Attributes>
             </Dimension>
             <Dimension>
               <ID>V_ISSUETYPE_MASTER_3150cd46-eac0-4a98-923b-61663128a04e</ID>
-              <Name>ISSUETYPE</Name>
+              <Name>ISSUE_TYPE</Name>
               <DimensionID>V_ISSUETYPE_MASTER_3150cd46-eac0-4a98-923b-61663128a04e</DimensionID>
               <Attributes>
                 <Attribute>
@@ -7084,7 +8197,6 @@
               <ID>v_issueprioritymaster_10117db4-3462-4932-80cd-7fcf8dd2902f</ID>
               <Name>ISSUE_PRIORITY</Name>
               <DimensionID>v_issueprioritymaster_10117db4-3462-4932-80cd-7fcf8dd2902f</DimensionID>
-              <Visible>false</Visible>
               <Attributes>
                 <Attribute>
                   <AttributeID>RowNumber</AttributeID>
@@ -7118,7 +8230,6 @@
               <ID>v_issueseveritymaster_8d07a3bf-d018-4936-bafd-60ac0e1c457e</ID>
               <Name>ISSUE_SEVERITY</Name>
               <DimensionID>v_issueseveritymaster_8d07a3bf-d018-4936-bafd-60ac0e1c457e</DimensionID>
-              <Visible>false</Visible>
               <Attributes>
                 <Attribute>
                   <AttributeID>RowNumber</AttributeID>
@@ -7149,7 +8260,6 @@
               <ID>v_issuestatusmaster_dfd8ec6c-845d-446c-bc1f-501cfbc8349c</ID>
               <Name>ISSUE_STATUS</Name>
               <DimensionID>v_issuestatusmaster_dfd8ec6c-845d-446c-bc1f-501cfbc8349c</DimensionID>
-              <Visible>false</Visible>
               <Attributes>
                 <Attribute>
                   <AttributeID>RowNumber</AttributeID>
@@ -7237,6 +8347,14 @@
                   <AttributeID>ACTUAL_HOURS</AttributeID>
                   <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
                 </Attribute>
+                <Attribute>
+                  <AttributeID>CalculatedColumn1</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>IS_US_HOLIDAY</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
               </Attributes>
             </Dimension>
             <Dimension>
@@ -7254,6 +8372,7 @@
                 </Attribute>
                 <Attribute>
                   <AttributeID>month</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
                 </Attribute>
                 <Attribute>
                   <AttributeID>year</AttributeID>
@@ -7261,6 +8380,92 @@
                 <Attribute>
                   <AttributeID>department_masterid</AttributeID>
                   <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Month 1</AttributeID>
+                </Attribute>
+              </Attributes>
+            </Dimension>
+            <Dimension>
+              <ID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</ID>
+              <Name>ISSUE_DATE</Name>
+              <DimensionID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</DimensionID>
+              <Attributes>
+                <Attribute>
+                  <AttributeID>RowNumber</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>id</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Day</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Month</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Year</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>quarter</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>date</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>day_of_week</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>wrk_hrs</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>Add Column2</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>WEEK_DAY</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>ACTUAL_HOURS</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>IS_INDIAN_HOLIDAY</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>IS_US_HOLIDAY</AttributeID>
+                </Attribute>
+              </Attributes>
+            </Dimension>
+            <Dimension>
+              <ID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</ID>
+              <Name>ISSUE_SLA_VALUE</Name>
+              <DimensionID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</DimensionID>
+              <Attributes>
+                <Attribute>
+                  <AttributeID>RowNumber</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>sla</AttributeID>
+                </Attribute>
+              </Attributes>
+            </Dimension>
+            <Dimension>
+              <ID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</ID>
+              <Name>ISSUE_CATEGORY</Name>
+              <DimensionID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</DimensionID>
+              <Attributes>
+                <Attribute>
+                  <AttributeID>RowNumber</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>DEFECT_CATEGORY</AttributeID>
                 </Attribute>
               </Attributes>
             </Dimension>
@@ -8534,6 +9739,50 @@
                         </KeyColumn>
                       </KeyColumns>
                     </Attribute>
+                    <Attribute>
+                      <AttributeID>DAYS_</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>MAXX(SSUE[LAST_MODIFIED_ON]-ISSUE[CREATED_ON])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>SLA_VALUE</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>IF(or(ISSUE[ISSUE_STATUS] = "Assigned",ISSUE[ISSUE_STATUS]="Open",ISSUE[ISSUE_STATUS]="New",ISSUE[ISSUE_STATUS]="reopen"),"SLA","NON SLA")</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DEFECT_CATEGORY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression></Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>ISSUE_CRT_DT</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>DATE(YEAR(ISSUE[CREATED_ON]),MONTH(ISSUE[CREATED_ON]),day(ISSUE[CREATED_ON]))</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
                   </Attributes>
                   <ddl200_200:ShareDimensionStorage>Shared</ddl200_200:ShareDimensionStorage>
                 </Dimension>
@@ -9214,6 +10463,274 @@
                   <Materialization>Regular</Materialization>
                   <ddl300:RelationshipID>87ab015a-d4fd-4a16-a97d-b7219f25bf68</ddl300:RelationshipID>
                 </Dimension>
+                <Dimension xsi:type="ReferenceMeasureGroupDimension">
+                  <CubeDimensionID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>4</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <Source xsi:type="ddl200_200:RowNumberBinding" />
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>sla</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>WChar</DataType>
+                          <DataSize>32768</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</TableID>
+                            <ColumnID>sla</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                  </Attributes>
+                  <IntermediateCubeDimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</IntermediateCubeDimensionID>
+                  <IntermediateGranularityAttributeID>SLA_VALUE</IntermediateGranularityAttributeID>
+                  <Materialization>Regular</Materialization>
+                  <ddl300:RelationshipID>8b67f411-687e-48b1-8d1e-56a730a85ac0</ddl300:RelationshipID>
+                </Dimension>
+                <Dimension xsi:type="ReferenceMeasureGroupDimension">
+                  <CubeDimensionID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>4</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <Source xsi:type="ddl200_200:RowNumberBinding" />
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DEFECT_CATEGORY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>WChar</DataType>
+                          <DataSize>32768</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</TableID>
+                            <ColumnID>DEFECT_CATEGORY</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                  </Attributes>
+                  <IntermediateCubeDimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</IntermediateCubeDimensionID>
+                  <IntermediateGranularityAttributeID>DEFECT_CATEGORY</IntermediateGranularityAttributeID>
+                  <Materialization>Regular</Materialization>
+                  <ddl300:RelationshipID>1ea61ae0-f78e-4302-8110-6b691111d30b</ddl300:RelationshipID>
+                </Dimension>
+                <Dimension xsi:type="ReferenceMeasureGroupDimension">
+                  <CubeDimensionID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>4</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <Source xsi:type="ddl200_200:RowNumberBinding" />
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>id</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>id</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Day</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>Day</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Month</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>Month</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Year</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>Year</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>quarter</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>quarter</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>date</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Date</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>date</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>day_of_week</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>day_of_week</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>wrk_hrs</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Double</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>wrk_hrs</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Add Column2</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ISSUE_DATE[MONTH])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>WEEK_DAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>WEEKDAY(ISSUE_DATE[DATE])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>ACTUAL_HOURS</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>IF(OR([WEEK_DAY]=7,[WEEK_DAY]=1),0,8)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_INDIAN_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_US_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                  </Attributes>
+                  <IntermediateCubeDimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</IntermediateCubeDimensionID>
+                  <IntermediateGranularityAttributeID>ISSUE_CRT_DT</IntermediateGranularityAttributeID>
+                  <Materialization>Regular</Materialization>
+                  <ddl300:RelationshipID>e2f49f25-7754-4144-9140-704c30fb4683</ddl300:RelationshipID>
+                </Dimension>
               </Dimensions>
               <Partitions>
                 <Partition>
@@ -9261,11 +10778,11 @@
             </MeasureGroup>
             <MeasureGroup>
               <ID>V_ISSUETYPE_MASTER_3150cd46-eac0-4a98-923b-61663128a04e</ID>
-              <Name>ISSUETYPE</Name>
+              <Name>ISSUE_TYPE</Name>
               <Measures>
                 <Measure>
                   <ID>V_ISSUETYPE_MASTER_3150cd46-eac0-4a98-923b-61663128a04e</ID>
-                  <Name>_Count ISSUETYPE</Name>
+                  <Name>_Count ISSUE_TYPE</Name>
                   <AggregateFunction>Count</AggregateFunction>
                   <DataType>BigInt</DataType>
                   <Source>
@@ -10666,6 +12183,28 @@
                         </KeyColumn>
                       </KeyColumns>
                     </Attribute>
+                    <Attribute>
+                      <AttributeID>CalculatedColumn1</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_US_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
                   </Attributes>
                   <IntermediateCubeDimensionID>V_TIMESHEET_83ee8a9f-7f13-41a9-9a4f-75dbc00b7e3b</IntermediateCubeDimensionID>
                   <IntermediateGranularityAttributeID>ENTRY_DATE 1</IntermediateGranularityAttributeID>
@@ -11247,6 +12786,50 @@
                           <DataType>Empty</DataType>
                           <Source xsi:type="ddl200_200:ExpressionBinding">
                             <Expression>IF(ISSUE[IS_BILLABLE]=0 ,"NO","YES")</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DAYS_</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>MAXX(SSUE[LAST_MODIFIED_ON]-ISSUE[CREATED_ON])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>SLA_VALUE</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>IF(or(ISSUE[ISSUE_STATUS] = "Assigned",ISSUE[ISSUE_STATUS]="Open",ISSUE[ISSUE_STATUS]="New",ISSUE[ISSUE_STATUS]="reopen"),"SLA","NON SLA")</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DEFECT_CATEGORY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression></Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>ISSUE_CRT_DT</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>DATE(YEAR(ISSUE[CREATED_ON]),MONTH(ISSUE[CREATED_ON]),day(ISSUE[CREATED_ON]))</Expression>
                           </Source>
                         </KeyColumn>
                       </KeyColumns>
@@ -11922,6 +13505,268 @@
                   <IntermediateCubeDimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</IntermediateCubeDimensionID>
                   <IntermediateGranularityAttributeID>ISSUE_SEVERITY_MASTERID</IntermediateGranularityAttributeID>
                 </Dimension>
+                <Dimension xsi:type="ReferenceMeasureGroupDimension">
+                  <CubeDimensionID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>4</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <Source xsi:type="ddl200_200:RowNumberBinding" />
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>sla</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>WChar</DataType>
+                          <DataSize>32768</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</TableID>
+                            <ColumnID>sla</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                  </Attributes>
+                  <IntermediateCubeDimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</IntermediateCubeDimensionID>
+                  <IntermediateGranularityAttributeID>SLA_VALUE</IntermediateGranularityAttributeID>
+                </Dimension>
+                <Dimension xsi:type="ReferenceMeasureGroupDimension">
+                  <CubeDimensionID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>4</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <Source xsi:type="ddl200_200:RowNumberBinding" />
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DEFECT_CATEGORY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>WChar</DataType>
+                          <DataSize>32768</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</TableID>
+                            <ColumnID>DEFECT_CATEGORY</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                  </Attributes>
+                  <IntermediateCubeDimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</IntermediateCubeDimensionID>
+                  <IntermediateGranularityAttributeID>DEFECT_CATEGORY</IntermediateGranularityAttributeID>
+                </Dimension>
+                <Dimension xsi:type="ReferenceMeasureGroupDimension">
+                  <CubeDimensionID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>4</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <Source xsi:type="ddl200_200:RowNumberBinding" />
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>id</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>id</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Day</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>Day</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Month</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>Month</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Year</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>Year</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>quarter</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>quarter</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>date</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Date</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>date</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>day_of_week</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>day_of_week</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>wrk_hrs</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Double</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>wrk_hrs</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Add Column2</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ISSUE_DATE[MONTH])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>WEEK_DAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>WEEKDAY(ISSUE_DATE[DATE])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>ACTUAL_HOURS</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>IF(OR([WEEK_DAY]=7,[WEEK_DAY]=1),0,8)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_INDIAN_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_US_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                  </Attributes>
+                  <IntermediateCubeDimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</IntermediateCubeDimensionID>
+                  <IntermediateGranularityAttributeID>ISSUE_CRT_DT</IntermediateGranularityAttributeID>
+                </Dimension>
               </Dimensions>
               <Partitions>
                 <Partition>
@@ -11970,11 +13815,6 @@
             <MeasureGroup>
               <ID>v_issueprioritymaster_10117db4-3462-4932-80cd-7fcf8dd2902f</ID>
               <Name>ISSUE_PRIORITY</Name>
-              <Annotations>
-                <Annotation>
-                  <Name>IsTablePrivate</Name>
-                </Annotation>
-              </Annotations>
               <Measures>
                 <Measure>
                   <ID>v_issueprioritymaster_10117db4-3462-4932-80cd-7fcf8dd2902f</ID>
@@ -12156,11 +13996,6 @@
             <MeasureGroup>
               <ID>v_issueseveritymaster_8d07a3bf-d018-4936-bafd-60ac0e1c457e</ID>
               <Name>ISSUE_SEVERITY</Name>
-              <Annotations>
-                <Annotation>
-                  <Name>IsTablePrivate</Name>
-                </Annotation>
-              </Annotations>
               <Measures>
                 <Measure>
                   <ID>v_issueseveritymaster_8d07a3bf-d018-4936-bafd-60ac0e1c457e</ID>
@@ -12327,11 +14162,6 @@
             <MeasureGroup>
               <ID>v_issuestatusmaster_dfd8ec6c-845d-446c-bc1f-501cfbc8349c</ID>
               <Name>ISSUE_STATUS</Name>
-              <Annotations>
-                <Annotation>
-                  <Name>IsTablePrivate</Name>
-                </Annotation>
-              </Annotations>
               <Measures>
                 <Measure>
                   <ID>v_issuestatusmaster_dfd8ec6c-845d-446c-bc1f-501cfbc8349c</ID>
@@ -12802,6 +14632,28 @@
                         </KeyColumn>
                       </KeyColumns>
                     </Attribute>
+                    <Attribute>
+                      <AttributeID>CalculatedColumn1</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_US_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
                   </Attributes>
                   <ddl200_200:ShareDimensionStorage>Shared</ddl200_200:ShareDimensionStorage>
                 </Dimension>
@@ -13120,6 +14972,17 @@
                         </KeyColumn>
                       </KeyColumns>
                     </Attribute>
+                    <Attribute>
+                      <AttributeID>Month 1</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],DEPT_EMP_COUNT_DATE[month_no])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
                   </Attributes>
                   <ddl200_200:ShareDimensionStorage>Shared</ddl200_200:ShareDimensionStorage>
                 </Dimension>
@@ -13264,6 +15127,496 @@
                 <Source xsi:type="ProactiveCachingInheritedBinding" />
               </ProactiveCaching>
             </MeasureGroup>
+            <MeasureGroup>
+              <ID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</ID>
+              <Name>ISSUE_DATE</Name>
+              <Measures>
+                <Measure>
+                  <ID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</ID>
+                  <Name>_Count ISSUE_DATE</Name>
+                  <AggregateFunction>Count</AggregateFunction>
+                  <DataType>BigInt</DataType>
+                  <Source>
+                    <DataType>BigInt</DataType>
+                    <DataSize>8</DataSize>
+                    <Source xsi:type="RowBinding">
+                      <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                    </Source>
+                  </Source>
+                  <Visible>false</Visible>
+                </Measure>
+              </Measures>
+              <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+              <ErrorConfiguration>
+                <KeyNotFound>IgnoreError</KeyNotFound>
+                <KeyDuplicate>ReportAndStop</KeyDuplicate>
+                <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+              </ErrorConfiguration>
+              <ProcessingMode>Regular</ProcessingMode>
+              <Dimensions>
+                <Dimension xsi:type="DegenerateMeasureGroupDimension">
+                  <CubeDimensionID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE</TableID>
+                            <ColumnID>RowNumber</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>id</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>id</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Day</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>Day</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Month</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>Month</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Year</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>Year</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>quarter</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>quarter</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>date</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Date</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>date</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>day_of_week</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>day_of_week</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>wrk_hrs</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Double</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</TableID>
+                            <ColumnID>wrk_hrs</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>Add Column2</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ISSUE_DATE[MONTH])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>WEEK_DAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>WEEKDAY(ISSUE_DATE[DATE])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>ACTUAL_HOURS</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>IF(OR([WEEK_DAY]=7,[WEEK_DAY]=1),0,8)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_INDIAN_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_US_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>if([ACTUAL_HOURS]=0,1,0)</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                  </Attributes>
+                  <ddl200_200:ShareDimensionStorage>Shared</ddl200_200:ShareDimensionStorage>
+                </Dimension>
+              </Dimensions>
+              <Partitions>
+                <Partition>
+                  <ID>ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2</ID>
+                  <Name>ISSUE_DATE</Name>
+                  <Annotations>
+                    <Annotation>
+                      <Name>IsQueryEditorUsed</Name>
+                      <Value>True</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>QueryEditorSerialization</Name>
+                    </Annotation>
+                    <Annotation>
+                      <Name>TableWidgetSerialization</Name>
+                    </Annotation>
+                  </Annotations>
+                  <Source xsi:type="QueryBinding">
+                    <DataSourceID>95be2a12-575d-406d-9306-2564b244a468</DataSourceID>
+                    <QueryDefinition>select * from datedimension</QueryDefinition>
+                  </Source>
+                  <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+                  <ProcessingMode>Regular</ProcessingMode>
+                  <ErrorConfiguration>
+                    <KeyNotFound>IgnoreError</KeyNotFound>
+                    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+                    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+                  </ErrorConfiguration>
+                  <ProactiveCaching>
+                    <SilenceInterval>-PT1S</SilenceInterval>
+                    <Latency>-PT1S</Latency>
+                    <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+                    <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+                    <Source xsi:type="ProactiveCachingInheritedBinding" />
+                  </ProactiveCaching>
+                </Partition>
+              </Partitions>
+              <ProactiveCaching>
+                <SilenceInterval>-PT1S</SilenceInterval>
+                <Latency>-PT1S</Latency>
+                <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+                <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+                <Source xsi:type="ProactiveCachingInheritedBinding" />
+              </ProactiveCaching>
+            </MeasureGroup>
+            <MeasureGroup>
+              <ID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</ID>
+              <Name>ISSUE_SLA_VALUE</Name>
+              <Measures>
+                <Measure>
+                  <ID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</ID>
+                  <Name>_Count ISSUE_SLA_VALUE</Name>
+                  <AggregateFunction>Count</AggregateFunction>
+                  <DataType>BigInt</DataType>
+                  <Source>
+                    <DataType>BigInt</DataType>
+                    <DataSize>8</DataSize>
+                    <Source xsi:type="RowBinding">
+                      <TableID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</TableID>
+                    </Source>
+                  </Source>
+                  <Visible>false</Visible>
+                </Measure>
+              </Measures>
+              <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+              <ErrorConfiguration>
+                <KeyNotFound>IgnoreError</KeyNotFound>
+                <KeyDuplicate>ReportAndStop</KeyDuplicate>
+                <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+              </ErrorConfiguration>
+              <ProcessingMode>Regular</ProcessingMode>
+              <Dimensions>
+                <Dimension xsi:type="DegenerateMeasureGroupDimension">
+                  <CubeDimensionID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>SLA_VALUE</TableID>
+                            <ColumnID>RowNumber</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>sla</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>WChar</DataType>
+                          <DataSize>32768</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</TableID>
+                            <ColumnID>sla</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                  </Attributes>
+                  <ddl200_200:ShareDimensionStorage>Shared</ddl200_200:ShareDimensionStorage>
+                </Dimension>
+              </Dimensions>
+              <Partitions>
+                <Partition>
+                  <ID>SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097</ID>
+                  <Name>SLA_VALUE</Name>
+                  <Annotations>
+                    <Annotation>
+                      <Name>IsQueryEditorUsed</Name>
+                      <Value>True</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>QueryEditorSerialization</Name>
+                    </Annotation>
+                    <Annotation>
+                      <Name>TableWidgetSerialization</Name>
+                    </Annotation>
+                  </Annotations>
+                  <Source xsi:type="QueryBinding">
+                    <DataSourceID>95be2a12-575d-406d-9306-2564b244a468</DataSourceID>
+                    <QueryDefinition>select 'SLA' as sla
+union all
+select 'NON SLA'</QueryDefinition>
+                  </Source>
+                  <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+                  <ProcessingMode>Regular</ProcessingMode>
+                  <ErrorConfiguration>
+                    <KeyNotFound>IgnoreError</KeyNotFound>
+                    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+                    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+                  </ErrorConfiguration>
+                  <ProactiveCaching>
+                    <SilenceInterval>-PT1S</SilenceInterval>
+                    <Latency>-PT1S</Latency>
+                    <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+                    <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+                    <Source xsi:type="ProactiveCachingInheritedBinding" />
+                  </ProactiveCaching>
+                </Partition>
+              </Partitions>
+              <ProactiveCaching>
+                <SilenceInterval>-PT1S</SilenceInterval>
+                <Latency>-PT1S</Latency>
+                <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+                <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+                <Source xsi:type="ProactiveCachingInheritedBinding" />
+              </ProactiveCaching>
+            </MeasureGroup>
+            <MeasureGroup>
+              <ID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</ID>
+              <Name>ISSUE_CATEGORY</Name>
+              <Measures>
+                <Measure>
+                  <ID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</ID>
+                  <Name>_Count ISSUE_CATEGORY</Name>
+                  <AggregateFunction>Count</AggregateFunction>
+                  <DataType>BigInt</DataType>
+                  <Source>
+                    <DataType>BigInt</DataType>
+                    <DataSize>8</DataSize>
+                    <Source xsi:type="RowBinding">
+                      <TableID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</TableID>
+                    </Source>
+                  </Source>
+                  <Visible>false</Visible>
+                </Measure>
+              </Measures>
+              <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+              <ErrorConfiguration>
+                <KeyNotFound>IgnoreError</KeyNotFound>
+                <KeyDuplicate>ReportAndStop</KeyDuplicate>
+                <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+              </ErrorConfiguration>
+              <ProcessingMode>Regular</ProcessingMode>
+              <Dimensions>
+                <Dimension xsi:type="DegenerateMeasureGroupDimension">
+                  <CubeDimensionID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>DEFECT_CATEGORY</TableID>
+                            <ColumnID>RowNumber</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DEFECT_CATEGORY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>WChar</DataType>
+                          <DataSize>32768</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</TableID>
+                            <ColumnID>DEFECT_CATEGORY</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                  </Attributes>
+                  <ddl200_200:ShareDimensionStorage>Shared</ddl200_200:ShareDimensionStorage>
+                </Dimension>
+              </Dimensions>
+              <Partitions>
+                <Partition>
+                  <ID>DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a</ID>
+                  <Name>DEFECT_CATEGORY</Name>
+                  <Annotations>
+                    <Annotation>
+                      <Name>IsQueryEditorUsed</Name>
+                      <Value>True</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>QueryEditorSerialization</Name>
+                    </Annotation>
+                    <Annotation>
+                      <Name>TableWidgetSerialization</Name>
+                    </Annotation>
+                  </Annotations>
+                  <Source xsi:type="QueryBinding">
+                    <DataSourceID>95be2a12-575d-406d-9306-2564b244a468</DataSourceID>
+                    <QueryDefinition>select 'Below 30 days' as DEFECT_CATEGORY
+union all
+select '30-49 days'
+union all
+select '50-99 days'
+union all
+select '100-499 days'
+union all
+select '500-999 days'
+union all
+select 'Above 1000 days'</QueryDefinition>
+                  </Source>
+                  <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+                  <ProcessingMode>Regular</ProcessingMode>
+                  <ErrorConfiguration>
+                    <KeyNotFound>IgnoreError</KeyNotFound>
+                    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+                    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+                  </ErrorConfiguration>
+                  <ProactiveCaching>
+                    <SilenceInterval>-PT1S</SilenceInterval>
+                    <Latency>-PT1S</Latency>
+                    <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+                    <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+                    <Source xsi:type="ProactiveCachingInheritedBinding" />
+                  </ProactiveCaching>
+                </Partition>
+              </Partitions>
+              <ProactiveCaching>
+                <SilenceInterval>-PT1S</SilenceInterval>
+                <Latency>-PT1S</Latency>
+                <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+                <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+                <Source xsi:type="ProactiveCachingInheritedBinding" />
+              </ProactiveCaching>
+            </MeasureGroup>
           </MeasureGroups>
           <Source>
             <DataSourceViewID>Sandbox</DataSourceViewID>
@@ -13291,6 +15644,7 @@ CREATE MEMBER CURRENTCUBE.Measures.[_EFFORT_TOTAL Goal] AS 'Measures.[TOTAL_HOUR
 CREATE MEMBER CURRENTCUBE.Measures.[_EFFORT_TOTAL Status] AS 'Case When IsEmpty(KpiValue("EFFORT_TOTAL")) Then Null When KpiValue("EFFORT_TOTAL") * 100 / KpiGoal("EFFORT_TOTAL") &lt; 40 Then -1 When KpiValue("EFFORT_TOTAL") * 100 / KpiGoal("EFFORT_TOTAL") &gt;= 40 And KpiValue("EFFORT_TOTAL") * 100 / KpiGoal("EFFORT_TOTAL") &lt; 80 Then 0 Else 1 End', ASSOCIATED_MEASURE_GROUP = 'TIMESHEET';
 CREATE MEMBER CURRENTCUBE.Measures.[_EFFORT_TOTAL Trend] AS '0', ASSOCIATED_MEASURE_GROUP = 'TIMESHEET';
 CREATE KPI CURRENTCUBE.[EFFORT_TOTAL] AS Measures.[EFFORT_TOTAL], ASSOCIATED_MEASURE_GROUP = 'TIMESHEET', GOAL = Measures.[_EFFORT_TOTAL Goal], STATUS = Measures.[_EFFORT_TOTAL Status], TREND = Measures.[_EFFORT_TOTAL Trend], STATUS_GRAPHIC = 'Three Circles Colored', TREND_GRAPHIC = 'Three Circles Colored';
+CREATE MEASURE 'ISSUE'[ISSUE_COUNT]=DISTINCTCOUNT([JIRA_ISSUE_ID]);
 </Text>
                 </Command>
               </Commands>
@@ -13325,7 +15679,7 @@ CREATE KPI CURRENTCUBE.[EFFORT_TOTAL] AS Measures.[EFFORT_TOTAL], ASSOCIATED_MEA
                     </Annotation>
                     <Annotation>
                       <Name>IsPrivate</Name>
-                      <Value>False</Value>
+                      <Value>True</Value>
                     </Annotation>
                     <Annotation>
                       <Name>Format</Name>
@@ -13336,6 +15690,7 @@ CREATE KPI CURRENTCUBE.[EFFORT_TOTAL] AS Measures.[EFFORT_TOTAL], ASSOCIATED_MEA
                   </Annotations>
                   <CalculationReference>[TOTAL_HOURS]</CalculationReference>
                   <CalculationType>Member</CalculationType>
+                  <Visible>false</Visible>
                   <FormatString>''</FormatString>
                 </CalculationProperty>
                 <CalculationProperty>
@@ -13481,6 +15836,27 @@ CREATE KPI CURRENTCUBE.[EFFORT_TOTAL] AS Measures.[EFFORT_TOTAL], ASSOCIATED_MEA
                   </Annotations>
                   <CalculationReference>KPIs.[EFFORT_TOTAL]</CalculationReference>
                   <CalculationType>Member</CalculationType>
+                </CalculationProperty>
+                <CalculationProperty>
+                  <Annotations>
+                    <Annotation>
+                      <Name>Type</Name>
+                      <Value>User</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>IsPrivate</Name>
+                      <Value>False</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>Format</Name>
+                      <Value>
+                        <Format Format="General" xmlns="" />
+                      </Value>
+                    </Annotation>
+                  </Annotations>
+                  <CalculationReference>[ISSUE_COUNT]</CalculationReference>
+                  <CalculationType>Member</CalculationType>
+                  <FormatString>''</FormatString>
                 </CalculationProperty>
                 <CalculationProperty>
                   <CalculationReference>Measures.[__No measures defined]</CalculationReference>
@@ -13706,7 +16082,7 @@ CREATE KPI CURRENTCUBE.[EFFORT_TOTAL] AS Measures.[EFFORT_TOTAL], ASSOCIATED_MEA
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="V_ISSUETYPE_MASTER_3150cd46-eac0-4a98-923b-61663128a04e" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="ISSUETYPE" msprop:DbSchemaName="dbo" msprop:DbTableName="V_ISSUETYPE_MASTER" msprop:TableType="View" msprop:Description="V_ISSUETYPE_MASTER" msprop:QueryDefinition="      SELECT [dbo].[V_ISSUETYPE_MASTER].*   FROM [dbo].[V_ISSUETYPE_MASTER] ">
+                    <xs:element name="V_ISSUETYPE_MASTER_3150cd46-eac0-4a98-923b-61663128a04e" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="ISSUE_TYPE" msprop:DbSchemaName="dbo" msprop:DbTableName="V_ISSUETYPE_MASTER" msprop:TableType="View" msprop:Description="V_ISSUETYPE_MASTER" msprop:QueryDefinition="      SELECT [dbo].[V_ISSUETYPE_MASTER].*   FROM [dbo].[V_ISSUETYPE_MASTER] ">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="ISSUETYPE_MASTERID" msprop:DbColumnName="ISSUETYPE_MASTERID" msprop:FriendlyName="ISSUETYPE_MASTERID" type="xs:long" minOccurs="0" />
@@ -13915,6 +16291,46 @@ CREATE KPI CURRENTCUBE.[EFFORT_TOTAL] AS Measures.[EFFORT_TOTAL], ASSOCIATED_MEA
                           <xs:element name="month" msprop:DbColumnName="month" msprop:FriendlyName="month" type="xs:long" minOccurs="0" />
                           <xs:element name="year" msprop:DbColumnName="year" msprop:FriendlyName="year" type="xs:long" minOccurs="0" />
                           <xs:element name="department_masterid" msprop:DbColumnName="department_masterid" msprop:FriendlyName="department_masterid" type="xs:long" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ISSUE_DATE_c2f284b7-a5a3-4666-a183-e68e4f31dff2" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="ISSUE_DATE" msprop:DbTableName="ISSUE_DATE" msprop:TableType="View" msprop:Description="ISSUE_DATE" msprop:QueryDefinition="select * from datedimension">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="id" msprop:DbColumnName="id" msprop:FriendlyName="id" type="xs:int" minOccurs="0" />
+                          <xs:element name="Day" msprop:DbColumnName="Day" msprop:FriendlyName="Day" type="xs:int" minOccurs="0" />
+                          <xs:element name="Month" msprop:DbColumnName="Month" msprop:FriendlyName="Month" type="xs:int" minOccurs="0" />
+                          <xs:element name="Year" msprop:DbColumnName="Year" msprop:FriendlyName="Year" type="xs:int" minOccurs="0" />
+                          <xs:element name="quarter" msprop:DbColumnName="quarter" msprop:FriendlyName="quarter" type="xs:int" minOccurs="0" />
+                          <xs:element name="date" msprop:DbColumnName="date" msprop:FriendlyName="date" type="xs:dateTime" minOccurs="0" />
+                          <xs:element name="day_of_week" msprop:DbColumnName="day_of_week" msprop:FriendlyName="day_of_week" type="xs:int" minOccurs="0" />
+                          <xs:element name="wrk_hrs" msprop:DbColumnName="wrk_hrs" msprop:FriendlyName="wrk_hrs" type="xs:decimal" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="SLA_VALUE_353fc800-a1a5-40d3-a8c1-395c6096a097" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="ISSUE_SLA_VALUE" msprop:DbTableName="SLA_VALUE" msprop:TableType="View" msprop:Description="SLA_VALUE" msprop:QueryDefinition="select 'SLA' as sla&#xD;&#xA;union all&#xD;&#xA;select 'NON SLA'">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="sla" msprop:DbColumnName="sla" msprop:FriendlyName="sla" minOccurs="0">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="32768" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="DEFECT_CATEGORY_f569a241-e9eb-4cab-938d-f00c2cedc41a" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="ISSUE_CATEGORY" msprop:DbTableName="DEFECT_CATEGORY" msprop:TableType="View" msprop:Description="DEFECT_CATEGORY" msprop:QueryDefinition="select 'Below 30 days' as DEFECT_CATEGORY&#xD;&#xA;union all&#xD;&#xA;select '30-49 days'&#xD;&#xA;union all&#xD;&#xA;select '50-99 days'&#xD;&#xA;union all&#xD;&#xA;select '100-499 days'&#xD;&#xA;union all&#xD;&#xA;select '500-999 days'&#xD;&#xA;union all&#xD;&#xA;select 'Above 1000 days'">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="DEFECT_CATEGORY" msprop:DbColumnName="DEFECT_CATEGORY" msprop:FriendlyName="DEFECT_CATEGORY" minOccurs="0">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="32768" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
