@@ -1857,7 +1857,7 @@
                 <AttributeRelationship>
                   <AttributeID>ISSUE_CRT_DT</AttributeID>
                   <OverrideBehavior>None</OverrideBehavior>
-                  <Name>ISSUE_MODIFIED_DT</Name>
+                  <Name>ISSUE_CRT_DT</Name>
                 </AttributeRelationship>
                 <AttributeRelationship>
                   <AttributeID>IsCreatedByClient</AttributeID>
@@ -1877,7 +1877,12 @@
                 <AttributeRelationship>
                   <AttributeID>ClientFlag</AttributeID>
                   <OverrideBehavior>None</OverrideBehavior>
-                  <Name>ClientFlag</Name>
+                  <Name>CLIENT_FLAG</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>DATE_TODAY</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>DATE_TODAY</Name>
                 </AttributeRelationship>
               </AttributeRelationships>
               <OrderBy>Key</OrderBy>
@@ -3248,14 +3253,14 @@
                 <KeyColumn>
                   <DataType>Empty</DataType>
                   <Source xsi:type="ddl200_200:ExpressionBinding">
-                    <Expression>1*(DATE(Year(ISSUE[LAST_MODIFIED_ON]),MONTH(ISSUE[LAST_MODIFIED_ON]),DAY(ISSUE[LAST_MODIFIED_ON]))-DATE(YEAR(ISSUE[CREATED_ON]),MONTH(ISSUE[CREATED_ON]),DAY(ISSUE[CREATED_ON])))</Expression>
+                    <Expression>1*(ISSUE[DATE_TODAY]-DATE(YEAR(ISSUE[CREATED_ON]),MONTH(ISSUE[CREATED_ON]),DAY(ISSUE[CREATED_ON])))</Expression>
                   </Source>
                 </KeyColumn>
               </KeyColumns>
               <NameColumn>
                 <DataType>WChar</DataType>
                 <Source xsi:type="ddl200_200:ExpressionBinding">
-                  <Expression>1*(DATE(Year(ISSUE[LAST_MODIFIED_ON]),MONTH(ISSUE[LAST_MODIFIED_ON]),DAY(ISSUE[LAST_MODIFIED_ON]))-DATE(YEAR(ISSUE[CREATED_ON]),MONTH(ISSUE[CREATED_ON]),DAY(ISSUE[CREATED_ON])))</Expression>
+                  <Expression>1*(ISSUE[DATE_TODAY]-DATE(YEAR(ISSUE[CREATED_ON]),MONTH(ISSUE[CREATED_ON]),DAY(ISSUE[CREATED_ON])))</Expression>
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
@@ -3355,19 +3360,19 @@
                 </Annotation>
               </Annotations>
               <ID>ISSUE_CRT_DT</ID>
-              <Name>ISSUE_MODIFIED_DT</Name>
+              <Name>ISSUE_CRT_DT</Name>
               <KeyColumns>
                 <KeyColumn>
                   <DataType>Empty</DataType>
                   <Source xsi:type="ddl200_200:ExpressionBinding">
-                    <Expression>DATE(YEAR(ISSUE[LAST_MODIFIED_ON]),MONTH(ISSUE[LAST_MODIFIED_ON]),day(ISSUE[LAST_MODIFIED_ON]))</Expression>
+                    <Expression>DATE(YEAR(ISSUE[CREATED_ON]),MONTH(ISSUE[CREATED_ON]),day(ISSUE[CREATED_ON]))</Expression>
                   </Source>
                 </KeyColumn>
               </KeyColumns>
               <NameColumn>
                 <DataType>WChar</DataType>
                 <Source xsi:type="ddl200_200:ExpressionBinding">
-                  <Expression>DATE(YEAR(ISSUE[LAST_MODIFIED_ON]),MONTH(ISSUE[LAST_MODIFIED_ON]),day(ISSUE[LAST_MODIFIED_ON]))</Expression>
+                  <Expression>DATE(YEAR(ISSUE[CREATED_ON]),MONTH(ISSUE[CREATED_ON]),day(ISSUE[CREATED_ON]))</Expression>
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
@@ -3468,7 +3473,7 @@
                 </Annotation>
               </Annotations>
               <ID>ClientFlag</ID>
-              <Name>ClientFlag</Name>
+              <Name>CLIENT_FLAG</Name>
               <KeyColumns>
                 <KeyColumn>
                   <DataType>Empty</DataType>
@@ -3484,6 +3489,35 @@
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="DateTimeGeneral" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>DATE_TODAY</ID>
+              <Name>DATE_TODAY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>TODAY()</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>TODAY()</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+              <ddl300_300:FormatString>General Date</ddl300_300:FormatString>
             </Attribute>
           </Attributes>
           <ProactiveCaching>
@@ -3679,7 +3713,7 @@
               </ddl300_300:ToRelationshipEnd>
             </ddl300_300:Relationship>
             <ddl300_300:Relationship>
-              <ID>06e8177d-7145-4da0-97f1-52493eda1f9e</ID>
+              <ID>02fcdd38-b3a6-442a-a1b5-349e36f5830e</ID>
               <ddl300_300:FromRelationshipEnd>
                 <ddl300_300:Multiplicity>Many</ddl300_300:Multiplicity>
                 <ddl300:VisualizationProperties />
@@ -8278,6 +8312,10 @@
                 <Attribute>
                   <AttributeID>ClientFlag</AttributeID>
                 </Attribute>
+                <Attribute>
+                  <AttributeID>DATE_TODAY</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
               </Attributes>
             </Dimension>
             <Dimension>
@@ -10441,6 +10479,17 @@
                         </KeyColumn>
                       </KeyColumns>
                     </Attribute>
+                    <Attribute>
+                      <AttributeID>DATE_TODAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>TODAY()</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
                   </Attributes>
                   <ddl200_200:ShareDimensionStorage>Shared</ddl200_200:ShareDimensionStorage>
                 </Dimension>
@@ -11358,7 +11407,7 @@
                   <IntermediateCubeDimensionID>V_ISSUE_43e152a6-545d-4cbf-82bd-5df522c4f3c8</IntermediateCubeDimensionID>
                   <IntermediateGranularityAttributeID>ISSUE_CRT_DT</IntermediateGranularityAttributeID>
                   <Materialization>Regular</Materialization>
-                  <ddl300:RelationshipID>06e8177d-7145-4da0-97f1-52493eda1f9e</ddl300:RelationshipID>
+                  <ddl300:RelationshipID>02fcdd38-b3a6-442a-a1b5-349e36f5830e</ddl300:RelationshipID>
                 </Dimension>
               </Dimensions>
               <Partitions>
@@ -13351,6 +13400,17 @@
                           <DataType>Empty</DataType>
                           <Source xsi:type="ddl200_200:ExpressionBinding">
                             <Expression>IF(ISSUE[IsCreatedByClient]+ISSUE[IsIdentifiedByClient]+ISSUE[IsAssignedByClient] &gt;0 ,"True","False")</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DATE_TODAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>TODAY()</Expression>
                           </Source>
                         </KeyColumn>
                       </KeyColumns>
