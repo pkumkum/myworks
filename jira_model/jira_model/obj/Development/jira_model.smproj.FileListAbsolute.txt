@@ -10,3 +10,9 @@ E:\workarea\model\jira_model\jira_model\bin\Model.deploymentoptions
 E:\workarea\model\jira_model\jira_model\obj\Development\Model.asdatabase
 E:\workarea\model\jira_model\jira_model\obj\Development\Model.deploymentoptions
 E:\workarea\model\jira_model\jira_model\obj\Development\Model.deploymenttargets
+D:\data\jira_model\jira_model\bin\Model.asdatabase
+D:\data\jira_model\jira_model\bin\Model.deploymenttargets
+D:\data\jira_model\jira_model\bin\Model.deploymentoptions
+D:\data\jira_model\jira_model\obj\Development\Model.asdatabase
+D:\data\jira_model\jira_model\obj\Development\Model.deploymentoptions
+D:\data\jira_model\jira_model\obj\Development\Model.deploymenttargets
