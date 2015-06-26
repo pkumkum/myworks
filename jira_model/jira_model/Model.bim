@@ -9462,7 +9462,7 @@
         </Dimension>
         <Dimension>
           <ID>emp_efforts_data_5ac872d0-c1c4-46dc-a753-7bb3fa0d17c2</ID>
-          <Name>ESTIMATED_EFFORT_DATE</Name>
+          <Name>ESTIMATED_EFFORT</Name>
           <Annotations>
             <Annotation>
               <Name>IsQueryEditorUsed</Name>
@@ -9725,6 +9725,7 @@
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
             </Attribute>
             <Attribute>
               <Annotations>
@@ -9760,6 +9761,7 @@
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
             </Attribute>
             <Attribute>
               <Annotations>
@@ -9795,6 +9797,7 @@
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
             </Attribute>
             <Attribute>
               <Annotations>
@@ -10028,17 +10031,18 @@
                 <KeyColumn>
                   <DataType>Empty</DataType>
                   <Source xsi:type="ddl200_200:ExpressionBinding">
-                    <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ESTIMATED_EFFORT_DATE[MONTH])</Expression>
+                    <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ESTIMATED_EFFORT[MONTH])</Expression>
                   </Source>
                 </KeyColumn>
               </KeyColumns>
               <NameColumn>
                 <DataType>WChar</DataType>
                 <Source xsi:type="ddl200_200:ExpressionBinding">
-                  <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ESTIMATED_EFFORT_DATE[MONTH])</Expression>
+                  <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ESTIMATED_EFFORT[MONTH])</Expression>
                 </Source>
               </NameColumn>
               <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
             </Attribute>
           </Attributes>
           <ProactiveCaching>
@@ -10072,7 +10076,497 @@
                 </Attributes>
               </ddl300_300:ToRelationshipEnd>
             </ddl300_300:Relationship>
+            <ddl300_300:Relationship>
+              <ID>866bbdb0-12dd-4794-ac07-ee144ed331fb</ID>
+              <ddl300_300:FromRelationshipEnd>
+                <ddl300_300:Multiplicity>Many</ddl300_300:Multiplicity>
+                <ddl300:VisualizationProperties />
+                <DimensionID>emp_efforts_data_5ac872d0-c1c4-46dc-a753-7bb3fa0d17c2</DimensionID>
+                <Attributes>
+                  <Attribute>
+                    <AttributeID>date</AttributeID>
+                  </Attribute>
+                </Attributes>
+              </ddl300_300:FromRelationshipEnd>
+              <ddl300_300:ToRelationshipEnd>
+                <ddl300_300:Multiplicity>One</ddl300_300:Multiplicity>
+                <ddl300:VisualizationProperties />
+                <DimensionID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</DimensionID>
+                <Attributes>
+                  <Attribute>
+                    <AttributeID>DATE</AttributeID>
+                  </Attribute>
+                </Attributes>
+              </ddl300_300:ToRelationshipEnd>
+            </ddl300_300:Relationship>
           </ddl300_300:Relationships>
+        </Dimension>
+        <Dimension>
+          <ID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</ID>
+          <Name>ESTIMATED_EFFORT_DATE</Name>
+          <Annotations>
+            <Annotation>
+              <Name>IsQueryEditorUsed</Name>
+              <Value>True</Value>
+            </Annotation>
+            <Annotation>
+              <Name>QueryEditorSerialization</Name>
+            </Annotation>
+            <Annotation>
+              <Name>TableWidgetSerialization</Name>
+            </Annotation>
+            <Annotation>
+              <Name>DataMarketWebBaseUrl</Name>
+            </Annotation>
+            <Annotation>
+              <Name>DataMarketWebQueryUrl</Name>
+            </Annotation>
+          </Annotations>
+          <Source xsi:type="DataSourceViewBinding">
+            <DataSourceViewID>Sandbox</DataSourceViewID>
+          </Source>
+          <UnknownMember valuens="ddl200_200">AutomaticNull</UnknownMember>
+          <ErrorConfiguration>
+            <KeyNotFound>IgnoreError</KeyNotFound>
+            <KeyDuplicate>ReportAndStop</KeyDuplicate>
+            <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+          </ErrorConfiguration>
+          <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+          <Language>1033</Language>
+          <UnknownMemberName>Unknown</UnknownMemberName>
+          <Attributes>
+            <Attribute>
+              <ID>RowNumber</ID>
+              <Name>RowNumber</Name>
+              <Type valuens="ddl200_200">RowNumber</Type>
+              <Usage>Key</Usage>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>4</DataSize>
+                  <NullProcessing>Error</NullProcessing>
+                  <Source xsi:type="ddl200_200:RowNumberBinding" />
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>4</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <Source xsi:type="ddl200_200:RowNumberBinding" />
+              </NameColumn>
+              <AttributeRelationships>
+                <AttributeRelationship>
+                  <AttributeID>DAY</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>DAY</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>MONTH</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>MONTH</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>YEAR</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>YEAR</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>QUARTER</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>QUARTER</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>DATE</AttributeID>
+                  <Cardinality>One</Cardinality>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>DATE</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>DAY_OF_WEEK</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>DAY_OF_WEEK</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>IS_INDIAN_HOLIDAY</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>IS_INDIAN_HOLIDAY</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>IS_US_HOLIDAY</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>IS_US_HOLIDAY</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>WRK_HRS</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>WRK_HRS</Name>
+                </AttributeRelationship>
+                <AttributeRelationship>
+                  <AttributeID>MONTH_NAME</AttributeID>
+                  <OverrideBehavior>None</OverrideBehavior>
+                  <Name>MONTH_NAME</Name>
+                </AttributeRelationship>
+              </AttributeRelationships>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>DAY</ID>
+              <Name>DAY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                    <ColumnID>DAY</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                  <ColumnID>DAY</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>MONTH</ID>
+              <Name>MONTH</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                    <ColumnID>MONTH</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                  <ColumnID>MONTH</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>YEAR</ID>
+              <Name>YEAR</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                    <ColumnID>YEAR</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                  <ColumnID>YEAR</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>QUARTER</ID>
+              <Name>QUARTER</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                    <ColumnID>QUARTER</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                  <ColumnID>QUARTER</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="DateTimeGeneral" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>DATE</ID>
+              <Name>DATE</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Date</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Error</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                    <ColumnID>DATE</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                  <ColumnID>DATE</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+              <ddl300_300:FormatString>General Date</ddl300_300:FormatString>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>DAY_OF_WEEK</ID>
+              <Name>DAY_OF_WEEK</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Integer</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                    <ColumnID>DAY_OF_WEEK</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                  <ColumnID>DAY_OF_WEEK</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>IS_INDIAN_HOLIDAY</ID>
+              <Name>IS_INDIAN_HOLIDAY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>UnsignedTinyInt</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                    <ColumnID>IS_INDIAN_HOLIDAY</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                  <ColumnID>IS_INDIAN_HOLIDAY</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>IS_US_HOLIDAY</ID>
+              <Name>IS_US_HOLIDAY</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>UnsignedTinyInt</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                    <ColumnID>IS_US_HOLIDAY</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                  <ColumnID>IS_US_HOLIDAY</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="General" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>WRK_HRS</ID>
+              <Name>WRK_HRS</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Double</DataType>
+                  <DataSize>-1</DataSize>
+                  <NullProcessing>Preserve</NullProcessing>
+                  <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                  <Source xsi:type="ColumnBinding">
+                    <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                    <ColumnID>WRK_HRS</ColumnID>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <DataSize>-1</DataSize>
+                <NullProcessing>ZeroOrBlank</NullProcessing>
+                <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                <Source xsi:type="ColumnBinding">
+                  <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                  <ColumnID>WRK_HRS</ColumnID>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+              <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+            </Attribute>
+            <Attribute>
+              <Annotations>
+                <Annotation>
+                  <Name>Format</Name>
+                  <Value>
+                    <Format Format="Text" xmlns="" />
+                  </Value>
+                </Annotation>
+              </Annotations>
+              <ID>MONTH_NAME</ID>
+              <Name>MONTH_NAME</Name>
+              <KeyColumns>
+                <KeyColumn>
+                  <DataType>Empty</DataType>
+                  <Source xsi:type="ddl200_200:ExpressionBinding">
+                    <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ESTIMATED_EFFORT_DATE[Month])</Expression>
+                  </Source>
+                </KeyColumn>
+              </KeyColumns>
+              <NameColumn>
+                <DataType>WChar</DataType>
+                <Source xsi:type="ddl200_200:ExpressionBinding">
+                  <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ESTIMATED_EFFORT_DATE[Month])</Expression>
+                </Source>
+              </NameColumn>
+              <OrderBy>Key</OrderBy>
+            </Attribute>
+          </Attributes>
+          <ProactiveCaching>
+            <SilenceInterval>-PT1S</SilenceInterval>
+            <Latency>-PT1S</Latency>
+            <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+            <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+            <Source xsi:type="ProactiveCachingInheritedBinding" />
+          </ProactiveCaching>
         </Dimension>
       </Dimensions>
       <Cubes>
@@ -10889,8 +11383,9 @@
             </Dimension>
             <Dimension>
               <ID>emp_efforts_data_5ac872d0-c1c4-46dc-a753-7bb3fa0d17c2</ID>
-              <Name>ESTIMATED_EFFORT_DATE</Name>
+              <Name>ESTIMATED_EFFORT</Name>
               <DimensionID>emp_efforts_data_5ac872d0-c1c4-46dc-a753-7bb3fa0d17c2</DimensionID>
+              <Visible>false</Visible>
               <Attributes>
                 <Attribute>
                   <AttributeID>RowNumber</AttributeID>
@@ -10910,12 +11405,15 @@
                 </Attribute>
                 <Attribute>
                   <AttributeID>Month</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
                 </Attribute>
                 <Attribute>
                   <AttributeID>Year</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
                 </Attribute>
                 <Attribute>
                   <AttributeID>quarter</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
                 </Attribute>
                 <Attribute>
                   <AttributeID>date</AttributeID>
@@ -10943,6 +11441,54 @@
                 </Attribute>
                 <Attribute>
                   <AttributeID>Month_name</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+              </Attributes>
+            </Dimension>
+            <Dimension>
+              <ID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</ID>
+              <Name>ESTIMATED_EFFORT_DATE</Name>
+              <DimensionID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</DimensionID>
+              <Attributes>
+                <Attribute>
+                  <AttributeID>RowNumber</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>DAY</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>MONTH</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>YEAR</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>QUARTER</AttributeID>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>DATE</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>DAY_OF_WEEK</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>IS_INDIAN_HOLIDAY</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>IS_US_HOLIDAY</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>WRK_HRS</AttributeID>
+                  <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+                </Attribute>
+                <Attribute>
+                  <AttributeID>MONTH_NAME</AttributeID>
                 </Attribute>
               </Attributes>
             </Dimension>
@@ -20060,11 +20606,11 @@ select 0,0,'UNKNOWN'</QueryDefinition>
             </MeasureGroup>
             <MeasureGroup>
               <ID>emp_efforts_data_5ac872d0-c1c4-46dc-a753-7bb3fa0d17c2</ID>
-              <Name>ESTIMATED_EFFORT_DATE</Name>
+              <Name>ESTIMATED_EFFORT</Name>
               <Measures>
                 <Measure>
                   <ID>emp_efforts_data_5ac872d0-c1c4-46dc-a753-7bb3fa0d17c2</ID>
-                  <Name>_Count ESTIMATED_EFFORT_DATE</Name>
+                  <Name>_Count ESTIMATED_EFFORT</Name>
                   <AggregateFunction>Count</AggregateFunction>
                   <DataType>BigInt</DataType>
                   <Source>
@@ -20731,6 +21277,173 @@ select 0,0,'UNKNOWN'</QueryDefinition>
                   <IntermediateCubeDimensionID>V_EMPLOYEE_65eaf3c6-200a-44d0-a97c-18d33809203e</IntermediateCubeDimensionID>
                   <IntermediateGranularityAttributeID>DEPARTMENT_MASTERID</IntermediateGranularityAttributeID>
                 </Dimension>
+                <Dimension xsi:type="ReferenceMeasureGroupDimension">
+                  <CubeDimensionID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>4</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <Source xsi:type="ddl200_200:RowNumberBinding" />
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>DAY</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>MONTH</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>MONTH</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>YEAR</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>YEAR</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>QUARTER</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>QUARTER</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DATE</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Date</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>DATE</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DAY_OF_WEEK</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>DAY_OF_WEEK</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_INDIAN_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>UnsignedTinyInt</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>IS_INDIAN_HOLIDAY</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_US_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>UnsignedTinyInt</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>IS_US_HOLIDAY</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>WRK_HRS</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Double</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>WRK_HRS</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>MONTH_NAME</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ESTIMATED_EFFORT_DATE[Month])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                  </Attributes>
+                  <IntermediateCubeDimensionID>emp_efforts_data_5ac872d0-c1c4-46dc-a753-7bb3fa0d17c2</IntermediateCubeDimensionID>
+                  <IntermediateGranularityAttributeID>date</IntermediateGranularityAttributeID>
+                  <Materialization>Regular</Materialization>
+                  <ddl300:RelationshipID>866bbdb0-12dd-4794-ac07-ee144ed331fb</ddl300:RelationshipID>
+                </Dimension>
               </Dimensions>
               <Partitions>
                 <Partition>
@@ -20751,6 +21464,254 @@ select 0,0,'UNKNOWN'</QueryDefinition>
                   <Source xsi:type="QueryBinding">
                     <DataSourceID>95be2a12-575d-406d-9306-2564b244a468</DataSourceID>
                     <QueryDefinition>SELECT [dbo].[emp_efforts_data].* 		FROM [dbo].[emp_efforts_data]</QueryDefinition>
+                  </Source>
+                  <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+                  <ProcessingMode>Regular</ProcessingMode>
+                  <ErrorConfiguration>
+                    <KeyNotFound>IgnoreError</KeyNotFound>
+                    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+                    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+                  </ErrorConfiguration>
+                  <ProactiveCaching>
+                    <SilenceInterval>-PT1S</SilenceInterval>
+                    <Latency>-PT1S</Latency>
+                    <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+                    <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+                    <Source xsi:type="ProactiveCachingInheritedBinding" />
+                  </ProactiveCaching>
+                </Partition>
+              </Partitions>
+              <ProactiveCaching>
+                <SilenceInterval>-PT1S</SilenceInterval>
+                <Latency>-PT1S</Latency>
+                <SilenceOverrideInterval>-PT1S</SilenceOverrideInterval>
+                <ForceRebuildInterval>-PT1S</ForceRebuildInterval>
+                <Source xsi:type="ProactiveCachingInheritedBinding" />
+              </ProactiveCaching>
+            </MeasureGroup>
+            <MeasureGroup>
+              <ID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</ID>
+              <Name>ESTIMATED_EFFORT_DATE</Name>
+              <Measures>
+                <Measure>
+                  <ID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</ID>
+                  <Name>_Count ESTIMATED_EFFORT_DATE</Name>
+                  <AggregateFunction>Count</AggregateFunction>
+                  <DataType>BigInt</DataType>
+                  <Source>
+                    <DataType>BigInt</DataType>
+                    <DataSize>8</DataSize>
+                    <Source xsi:type="RowBinding">
+                      <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                    </Source>
+                  </Source>
+                  <Visible>false</Visible>
+                </Measure>
+              </Measures>
+              <StorageMode valuens="ddl200_200">InMemory</StorageMode>
+              <ErrorConfiguration>
+                <KeyNotFound>IgnoreError</KeyNotFound>
+                <KeyDuplicate>ReportAndStop</KeyDuplicate>
+                <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+              </ErrorConfiguration>
+              <ProcessingMode>Regular</ProcessingMode>
+              <Dimensions>
+                <Dimension xsi:type="DegenerateMeasureGroupDimension">
+                  <CubeDimensionID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</CubeDimensionID>
+                  <Attributes>
+                    <Attribute>
+                      <AttributeID>RowNumber</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE</TableID>
+                            <ColumnID>RowNumber</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                      <Type>Granularity</Type>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>DAY</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>MONTH</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>MONTH</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>YEAR</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>YEAR</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>QUARTER</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>QUARTER</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DATE</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Date</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Error</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>DATE</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>DAY_OF_WEEK</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Integer</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>DAY_OF_WEEK</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_INDIAN_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>UnsignedTinyInt</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>IS_INDIAN_HOLIDAY</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>IS_US_HOLIDAY</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>UnsignedTinyInt</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>IS_US_HOLIDAY</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>WRK_HRS</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Double</DataType>
+                          <DataSize>-1</DataSize>
+                          <NullProcessing>Preserve</NullProcessing>
+                          <InvalidXmlCharacters>Remove</InvalidXmlCharacters>
+                          <Source xsi:type="ColumnBinding">
+                            <TableID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</TableID>
+                            <ColumnID>WRK_HRS</ColumnID>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                    <Attribute>
+                      <AttributeID>MONTH_NAME</AttributeID>
+                      <KeyColumns>
+                        <KeyColumn>
+                          <DataType>Empty</DataType>
+                          <Source xsi:type="ddl200_200:ExpressionBinding">
+                            <Expression>LOOKUPVALUE(MONTH[Month],MONTH[Month_id],ESTIMATED_EFFORT_DATE[Month])</Expression>
+                          </Source>
+                        </KeyColumn>
+                      </KeyColumns>
+                    </Attribute>
+                  </Attributes>
+                  <ddl200_200:ShareDimensionStorage>Shared</ddl200_200:ShareDimensionStorage>
+                </Dimension>
+              </Dimensions>
+              <Partitions>
+                <Partition>
+                  <ID>ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971</ID>
+                  <Name>ESTIMATED_EFFORT_DATE</Name>
+                  <Annotations>
+                    <Annotation>
+                      <Name>IsQueryEditorUsed</Name>
+                      <Value>True</Value>
+                    </Annotation>
+                    <Annotation>
+                      <Name>QueryEditorSerialization</Name>
+                    </Annotation>
+                    <Annotation>
+                      <Name>TableWidgetSerialization</Name>
+                    </Annotation>
+                  </Annotations>
+                  <Source xsi:type="QueryBinding">
+                    <DataSourceID>95be2a12-575d-406d-9306-2564b244a468</DataSourceID>
+                    <QueryDefinition>select 
+DAY,
+MONTH,
+YEAR,
+QUARTER,
+DATE,
+DAY_OF_WEEK,
+IS_INDIAN_HOLIDAY,
+IS_US_HOLIDAY,
+CASE WHEN (IS_INDIAN_HOLIDAY =1 or IS_US_HOLIDAY =1 )then WRK_HRS else 0 end as WRK_HRS
+from DateDimension with(nolock)
+order by DATE</QueryDefinition>
                   </Source>
                   <StorageMode valuens="ddl200_200">InMemory</StorageMode>
                   <ProcessingMode>Regular</ProcessingMode>
@@ -20806,7 +21767,7 @@ CREATE MEMBER CURRENTCUBE.Measures.[_EFFORT_TOTAL Status] AS 'Case When IsEmpty(
 CREATE MEMBER CURRENTCUBE.Measures.[_EFFORT_TOTAL Trend] AS '0', ASSOCIATED_MEASURE_GROUP = 'TIMESHEET';
 CREATE KPI CURRENTCUBE.[EFFORT_TOTAL] AS Measures.[EFFORT_TOTAL], ASSOCIATED_MEASURE_GROUP = 'TIMESHEET', GOAL = Measures.[_EFFORT_TOTAL Goal], STATUS = Measures.[_EFFORT_TOTAL Status], TREND = Measures.[_EFFORT_TOTAL Trend], STATUS_GRAPHIC = 'Three Circles Colored', TREND_GRAPHIC = 'Three Circles Colored';
 CREATE MEASURE 'TIMESHEET'[PERCENTAGE_OF_EFFORT]=100- ([EFFORT_TOTAL]/[ESTIMATED_WORK_HOURS])*100;
-CREATE MEASURE 'ESTIMATED_EFFORT_DATE'[ESTIMATED_WORK_HOURS]=SUM([wrk_hrs]);
+CREATE MEASURE 'ESTIMATED_EFFORT'[ESTIMATED_WORK_HOURS]=SUM([wrk_hrs]);
 </Text>
                 </Command>
               </Commands>
@@ -21633,7 +22594,7 @@ CREATE MEASURE 'ESTIMATED_EFFORT_DATE'[ESTIMATED_WORK_HOURS]=SUM([wrk_hrs]);
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="emp_efforts_data_5ac872d0-c1c4-46dc-a753-7bb3fa0d17c2" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="ESTIMATED_EFFORT_DATE" msprop:DbSchemaName="dbo" msprop:DbTableName="emp_efforts_data" msprop:TableType="View" msprop:Description="emp_efforts_data" msprop:QueryDefinition="      SELECT [dbo].[emp_efforts_data].*   FROM [dbo].[emp_efforts_data] ">
+                    <xs:element name="emp_efforts_data_5ac872d0-c1c4-46dc-a753-7bb3fa0d17c2" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="ESTIMATED_EFFORT" msprop:DbSchemaName="dbo" msprop:DbTableName="emp_efforts_data" msprop:TableType="View" msprop:Description="emp_efforts_data" msprop:QueryDefinition="      SELECT [dbo].[emp_efforts_data].*   FROM [dbo].[emp_efforts_data] ">
                       <xs:complexType>
                         <xs:sequence>
                           <xs:element name="emp_effort_data_id" msprop:DbColumnName="emp_effort_data_id" msprop:FriendlyName="emp_effort_data_id" type="xs:long" minOccurs="0" />
@@ -21648,6 +22609,21 @@ CREATE MEASURE 'ESTIMATED_EFFORT_DATE'[ESTIMATED_WORK_HOURS]=SUM([wrk_hrs]);
                           <xs:element name="IS_US_HOLIDAY" msprop:DbColumnName="IS_US_HOLIDAY" msprop:FriendlyName="IS_US_HOLIDAY" type="xs:long" minOccurs="0" />
                           <xs:element name="EMPLOYEE_MASTERID" msprop:DbColumnName="EMPLOYEE_MASTERID" msprop:FriendlyName="EMPLOYEE_MASTERID" type="xs:long" minOccurs="0" />
                           <xs:element name="wrk_hrs" msprop:DbColumnName="wrk_hrs" msprop:FriendlyName="wrk_hrs" type="xs:double" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ESTIMATED_EFFORT_DATE_ad3adce5-2d01-4d5a-a732-48cb3bc93971" msdata:Locale="" msprop:IsLogical="True" msprop:FriendlyName="ESTIMATED_EFFORT_DATE" msprop:DbTableName="ESTIMATED_EFFORT_DATE" msprop:TableType="View" msprop:Description="ESTIMATED_EFFORT_DATE" msprop:QueryDefinition="select &#xD;&#xA;DAY,&#xD;&#xA;MONTH,&#xD;&#xA;YEAR,&#xD;&#xA;QUARTER,&#xD;&#xA;DATE,&#xD;&#xA;DAY_OF_WEEK,&#xD;&#xA;IS_INDIAN_HOLIDAY,&#xD;&#xA;IS_US_HOLIDAY,&#xD;&#xA;CASE WHEN (IS_INDIAN_HOLIDAY =1 or IS_US_HOLIDAY =1 )then WRK_HRS else 0 end as WRK_HRS&#xD;&#xA;from DateDimension with(nolock)&#xD;&#xA;order by DATE">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="DAY" msprop:DbColumnName="DAY" msprop:FriendlyName="DAY" type="xs:int" minOccurs="0" />
+                          <xs:element name="MONTH" msprop:DbColumnName="MONTH" msprop:FriendlyName="MONTH" type="xs:int" minOccurs="0" />
+                          <xs:element name="YEAR" msprop:DbColumnName="YEAR" msprop:FriendlyName="YEAR" type="xs:int" minOccurs="0" />
+                          <xs:element name="QUARTER" msprop:DbColumnName="QUARTER" msprop:FriendlyName="QUARTER" type="xs:int" minOccurs="0" />
+                          <xs:element name="DATE" msprop:DbColumnName="DATE" msprop:FriendlyName="DATE" type="xs:dateTime" minOccurs="0" />
+                          <xs:element name="DAY_OF_WEEK" msprop:DbColumnName="DAY_OF_WEEK" msprop:FriendlyName="DAY_OF_WEEK" type="xs:int" minOccurs="0" />
+                          <xs:element name="IS_INDIAN_HOLIDAY" msprop:DbColumnName="IS_INDIAN_HOLIDAY" msprop:FriendlyName="IS_INDIAN_HOLIDAY" type="xs:unsignedByte" minOccurs="0" />
+                          <xs:element name="IS_US_HOLIDAY" msprop:DbColumnName="IS_US_HOLIDAY" msprop:FriendlyName="IS_US_HOLIDAY" type="xs:unsignedByte" minOccurs="0" />
+                          <xs:element name="WRK_HRS" msprop:DbColumnName="WRK_HRS" msprop:FriendlyName="WRK_HRS" type="xs:decimal" minOccurs="0" />
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
