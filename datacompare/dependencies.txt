@@ -1,2 +1,0 @@
-1.pyodbc (https://code.google.com/p/pyodbc/)
-2.XlsxWriter (https://pypi.python.org/pypi/XlsxWriter)

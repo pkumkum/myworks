@@ -1,1 +1,0 @@
-from sql1 import sys_user
