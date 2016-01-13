@@ -7,6 +7,7 @@ from pyspark.sql import SQLContext, Row
 
 #test comment
 #test comment1
+#test comment2
 sc = SparkContext(appName="claimCount")
 sqlContext = SQLContext(sc)
 lines = sc.textFile("/data/claim_data/claimdata.txt")
